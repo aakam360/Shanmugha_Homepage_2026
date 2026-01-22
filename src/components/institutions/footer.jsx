@@ -66,38 +66,45 @@ const Footer = () => {
           </div>
 
           {/* LINKS */}
-          <div className="footer-links">
-            <h4>Quick Links</h4>
-            <a>About Us</a>
-            <a>Admissions</a>
-            <a>Academics</a>
-            <a>Placements</a>
-            <a>Research</a>
-            <a>Campus Life</a>
-          </div>
+          <div className="row-tab">
+            <div className="row">
+              <div className="col-6">
+                <div className="footer-links">
+                  <h4>Quick Links</h4>
+                  <a>About Us</a>
+                  <a>Admissions</a>
+                  <a>Academics</a>
+                  <a>Placements</a>
+                  <a>Research</a>
+                  <a>Campus Life</a>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="footer-links">
+                  <h4>Institution</h4>
+                  <a>Engineering & Technology</a>
+                  <a>Pharmacy</a>
+                  <a>Nursing</a>
+                  <a>Allied Health Sciences</a>
+                </div>
+              </div>
+            </div>
 
-          <div className="footer-links">
-            <h4>Departments</h4>
-            <a>Engineering & Technology</a>
-            <a>Pharmacy</a>
-            <a>Nursing</a>
-            <a>Allied Health Sciences</a>
-          </div>
+            <div className="footer-links">
+              <h4>Resources</h4>
+              <a>Students</a>
+              <a>Faculty</a>
+              <a>Parents</a>
+              <a>Alumni</a>
+              <a>Visitors</a>
+              <a>Career Centre</a>
 
-          <div className="footer-links">
-            <h4>Resources</h4>
-            <a>Students</a>
-            <a>Faculty</a>
-            <a>Parents</a>
-            <a>Alumni</a>
-            <a>Visitors</a>
-            <a>Career Centre</a>
-
-            <div className="contact">
-              <p>📍 Tiruchengode, Salem District, Tamil Nadu - 637211</p>
-              <p>📞 0428-335-9999</p>
-              <p>✉ info@shanmugha.edu.in</p>
-              <p>🕘 Mon - Fri: 9:00 AM - 5:00 PM</p>
+              <div className="contact">
+                <p>📍 Tiruchengode, Salem District, Tamil Nadu - 637211</p>
+                <p>📞 0428-335-9999</p>
+                <p>✉ info@shanmugha.edu.in</p>
+                <p>🕘 Mon - Fri: 9:00 AM - 5:00 PM</p>
+              </div>
             </div>
           </div>
         </div>
@@ -225,6 +232,7 @@ const Footer = () => {
         .contact {
           margin-top: 16px;
           font-size: 14px;
+          line-height: 1.8;
         }
 
         .footer-subscribe {
@@ -303,6 +311,57 @@ const Footer = () => {
 
           .footer-subscribe {
             flex-direction: column;
+          }
+        }
+
+        @media (min-width: 393px) {
+          .row {
+            display: flex;
+          }
+
+          .col-6 {
+            margin-right: 90;
+          }
+        }
+
+        @media (min-width: 820px) {
+          .footer-container {
+            display: flex;
+          }
+
+          .row {
+            display: flex;
+          }
+
+          .row-tab {
+            display: flex;
+          }
+
+          .col-6 {
+            margin-right: 90;
+          }
+        }
+
+        @media (min-width: 1559px) {
+          .footer-container {
+            display: flex;
+          }
+
+          .row {
+            display: flex;
+          }
+
+          .row-tab {
+            display: flex;
+          }
+
+          .col-6 {
+            margin-right: 90;
+          }
+
+          .contact {
+            width: calc(100% + 20rem);
+            margin-left: -17rem;
           }
         }
       `}</style>
