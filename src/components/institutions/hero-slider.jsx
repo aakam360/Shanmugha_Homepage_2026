@@ -1,20 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchPrimaryEvents,
-  selectPrimaryEvents,
-} from "../institutions/redux/features/homepageEventsSlice";
 import ToastMessage from "../institutions/helpers/ToastMessage";
 
 const HeroSlider = () => {
-  // const dispatch = useDispatch();
-  // const primary_events = useSelector(selectPrimaryEvents);
-
   const [isUpdatesVisible, setIsUpdatesVisible] = useState(true);
   const [showUpdatesPopup, setShowUpdatesPopup] = useState(false);
   const [showAdmissionPopup, setShowAdmissionPopup] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     mobileNumber: "",
@@ -28,70 +21,46 @@ const HeroSlider = () => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  // Program -> Courses data
   const programs = [
-    {
-      name: "B.E",
-      courses: ["BME", "CSE", "ECE", "MECH", "CS&E"],
-    },
-    {
-      name: "B.TECH",
-      courses: ["AGRI", "AI&DS", "IT", "LE"],
-    },
-    {
-      name: "M.E",
-      courses: [],
-    },
-    {
-      name: "Pharmacy",
-      courses: ["PHARM.D", "M.PHARM", "B.PHARM", "B.PHARM(LE)", "D.PHARM"],
-    },
-    {
-      name: "Nursing",
-      courses: ["B.Sc Nursing"],
-    },
-    {
-      name: "Allied Health Science",
-      courses: [
-        "B.Sc (CT)",
-        "B.Sc (RIT)",
-        "B.Sc (OT&AT)",
-        "B.Sc (OPTOMETRY)",
-        "B.Sc (MLT)",
-        "B.Sc (CPPCT)",
-      ],
-    },
+    { name: "B.E", courses: ["BME", "CSE", "ECE", "MECH", "CS&E"] },
+    { name: "B.TECH", courses: ["AGRI", "AI&DS", "IT", "LE"] },
+    { name: "M.E", courses: [] },
+    { name: "Pharmacy", courses: ["PHARM.D", "M.PHARM", "B.PHARM", "B.PHARM(LE)", "D.PHARM"] },
+    { name: "Nursing", courses: ["B.Sc Nursing"] },
+    { name: "Allied Health Science", courses: ["B.Sc (CT)", "B.Sc (RIT)", "B.Sc (OT&AT)", "B.Sc (OPTOMETRY)", "B.Sc (MLT)", "B.Sc (CPPCT)"] },
   ];
 
- 
-
+  // Handle responsive behavior
   useEffect(() => {
-    let timeoutId;
-    const setup = () => {
-      if (window.innerWidth <= 1024) {
-        timeoutId = setTimeout(() => setShowUpdatesPopup(true), 5000);
-      }
+    const checkWidth = () => {
+      setIsMobile(window.innerWidth <= 1024);
     };
-    setup();
-    const handleResize = () => {
-      if (window.innerWidth > 1024) setShowUpdatesPopup(false);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener("resize", handleResize);
-    };
+    
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
   }, []);
 
+  // Show updates popup on mobile/tablet on load
+  useEffect(() => {
+    if (isMobile) {
+      const timer = setTimeout(() => setShowUpdatesPopup(true), 500);
+      return () => clearTimeout(timer);
+    } else {
+      // Ensure popup is closed on desktop
+      setShowUpdatesPopup(false);
+    }
+  }, [isMobile]);
+
+  // Prevent scroll when popups are open
   useEffect(() => {
     if (showUpdatesPopup || showAdmissionPopup) {
-      const original = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      return () => (document.body.style.overflow = original);
+      return () => (document.body.style.overflow = "unset");
     }
   }, [showUpdatesPopup, showAdmissionPopup]);
 
-  // Listen for global event from header (or elsewhere) to open the admission popup
+  // Listen for global event to open admission popup
   useEffect(() => {
     const openHandler = () => setShowAdmissionPopup(true);
     window.addEventListener("openAdmissionPopup", openHandler);
@@ -103,15 +72,19 @@ const HeroSlider = () => {
   const openAdmissionPopup = () => setShowAdmissionPopup(true);
   const closeAdmissionPopup = () => setShowAdmissionPopup(false);
 
-  // When the course select is focused on small screens, show as a listbox (size>1) so it scrolls within the popup
   const handleCourseFocus = (e) => {
     if (window.innerWidth <= 480) {
-      try { e.target.size = 6; } catch (err) { /* ignore if not supported */ }
+      try {
+        e.target.size = 6;
+      } catch (err) {}
     }
   };
+
   const handleCourseBlur = (e) => {
     if (window.innerWidth <= 480) {
-      try { e.target.size = 1; } catch (err) { /* ignore if not supported */ }
+      try {
+        e.target.size = 1;
+      } catch (err) {}
     }
   };
 
@@ -119,15 +92,15 @@ const HeroSlider = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => {
       if (name === "program") {
-        // Selecting a program resets the course
         return { ...prev, program: value, course: "" };
       }
       return { ...prev, [name]: type === "checkbox" ? checked : value };
     });
 
-    // If a select was changed on small screens, collapse the listbox back to single-line
     if ((name === "course" || name === "program") && window.innerWidth <= 480) {
-      try { e.target.size = 1; } catch (err) { /* ignore if not supported */ }
+      try {
+        e.target.size = 1;
+      } catch (err) {}
     }
   };
 
@@ -152,9 +125,10 @@ const HeroSlider = () => {
         throw new Error(`Server responded ${response.status}: ${text}`);
       }
 
-      // Optionally parse response JSON
       let data = null;
-      try { data = await response.json(); } catch (err) { /* ignore non-json responses */ }
+      try {
+        data = await response.json();
+      } catch (err) {}
       console.log("Admission submission success:", data || "OK");
 
       setFormData({
@@ -192,49 +166,30 @@ const HeroSlider = () => {
           <div className="container">
             <div className="hero-layout">
               <div className="hero-content">
-                <h1 className="hero-title">
-                  Sri Shanmugha Educational Institutions
-                </h1>
+                <h1 className="hero-title">Sri Shanmugha Educational Institutions</h1>
                 <h2 className="hero-subtitle">Innovate and Inspire</h2>
                 <p className="hero-description">
-                  Pioneering Innovation in Higher Education Since 2010. With 15+
-                  Years of Educational Excellence, 20,000+ Students Transformed,
-                  100+ Quality Awards, and 95% Placement Success.
+                  Pioneering Innovation in Higher Education Since 2010. With 15+ Years of Educational Excellence, 20,000+ Students Transformed, 100+ Quality Awards, and 95% Placement Success.
                 </p>
                 <div className="hero-cta-buttons">
-                  <button
-                    className="btn btn-primary"
-                    onClick={openAdmissionPopup}
-                  >
+                  <button className="btn btn-primary" onClick={openAdmissionPopup}>
                     Apply Now
                   </button>
-                  <a
-                    href="/assets/docs/brochure.pdf"
-                    className="btn btn-secondary"
-                    download
-                  >
+                  <a href="/assets/docs/brochure.pdf" className="btn btn-secondary" download>
                     Download Brochure
                   </a>
                 </div>
               </div>
 
+              {/* Desktop Updates Panel */}
               <aside
-                className={`campus-updates desktop-only ${
-                  isUpdatesVisible ? "visible" : "hidden"
-                }`}
+                className={`campus-updates desktop-panel ${isUpdatesVisible ? "visible" : "hidden"}`}
                 aria-live="polite"
                 aria-hidden={!isUpdatesVisible}
               >
                 <div className="updates-header">
                   <h3>Campus Updates</h3>
                   <p>Notifications & alerts</p>
-                  <button
-                    className="close-updates"
-                    onClick={toggleUpdatesVisibility}
-                    aria-label="Close updates"
-                  >
-                    &times;
-                  </button>
                 </div>
                 <div className="updates-content">
                   <div className="update-item highlight">
@@ -256,24 +211,13 @@ const HeroSlider = () => {
                 </div>
               </aside>
 
+              {/* Desktop Toggle Button */}
               <button
-                className={`updates-toggle desktop-only ${
-                  !isUpdatesVisible ? "visible" : "hidden"
-                }`}
+                className={`updates-toggle desktop-toggle ${!isUpdatesVisible ? "visible" : "hidden"}`}
                 onClick={toggleUpdatesVisibility}
                 aria-label="Show updates"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
@@ -284,22 +228,19 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      {/* Mobile Updates Popup */}
+      {/* Mobile/Tablet Updates Popup */}
       {showUpdatesPopup && (
-        <div
-          className="mobile-updates-popup-overlay"
-          role="dialog"
-          aria-modal="true"
-        >
+        <div className="mobile-updates-popup-overlay" role="dialog" aria-modal="true">
           <div className="mobile-updates-popup">
             <aside className="campus-updates popup-card">
               <div className="updates-header">
                 <h3>Campus Updates</h3>
                 <p>Notifications & alerts</p>
-                <button
-                  className="close-updates"
-                  onClick={closeUpdatesPopup}
-                  aria-label="Close updates"
+                <button 
+                  className="close-updates" 
+                  onClick={closeUpdatesPopup} 
+                  aria-label="Close updates popup"
+                  title="Close this popup"
                 >
                   &times;
                 </button>
@@ -334,17 +275,12 @@ const HeroSlider = () => {
             <div className="admission-popup">
               <div className="popup-header">
                 <h3>Admission Enquiry</h3>
-                <button
-                  className="close-popup"
-                  onClick={closeAdmissionPopup}
-                  aria-label="Close admission enquiry"
-                >
+                <button className="close-popup" onClick={closeAdmissionPopup} aria-label="Close admission enquiry">
                   &times;
                 </button>
               </div>
 
               <form onSubmit={handleSubmit} className="admission-form">
-                {/* Row 1: Full Name + Mobile */}
                 <div className="form-row">
                   <div className="form-group half">
                     <label htmlFor="fullName">Full Name *</label>
@@ -359,12 +295,12 @@ const HeroSlider = () => {
                     />
                   </div>
                   <div className="form-group half">
-                    <label htmlFor="mobile">Mobile Number *</label>
+                    <label htmlFor="mobileNumber">Mobile Number *</label>
                     <input
                       type="tel"
-                      id="mobile"
-                      name="mobile"
-                      value={formData.mobile}
+                      id="mobileNumber"
+                      name="mobileNumber"
+                      value={formData.mobileNumber}
                       onChange={handleInputChange}
                       required
                       placeholder="Enter your mobile number"
@@ -372,7 +308,6 @@ const HeroSlider = () => {
                   </div>
                 </div>
 
-                {/* Row 2: Email + City */}
                 <div className="form-row">
                   <div className="form-group half">
                     <label htmlFor="email">Email Address *</label>
@@ -400,7 +335,6 @@ const HeroSlider = () => {
                   </div>
                 </div>
 
-                {/* Row 3: State + Program */}
                 <div className="form-row">
                   <div className="form-group half">
                     <label htmlFor="state">State *</label>
@@ -435,10 +369,9 @@ const HeroSlider = () => {
                   </div>
                 </div>
 
-                {/* Row 4: Course (depends on Program) */}
                 <div className="form-row">
                   <div className="form-group half">
-                    <label htmlFor="course">Course {"*"}</label>
+                    <label htmlFor="course">Course {formData.program && programs.find((p) => p.name === formData.program)?.courses.length > 0 ? "*" : ""}</label>
                     <select
                       id="course"
                       name="course"
@@ -447,32 +380,20 @@ const HeroSlider = () => {
                       onFocus={handleCourseFocus}
                       onBlur={handleCourseBlur}
                       required={
-                        (
-                          programs.find((p) => p.name === formData.program)
-                            ?.courses || []
-                        ).length > 0
+                        (programs.find((p) => p.name === formData.program)?.courses || []).length > 0
                       }
                       disabled={
-                        (
-                          programs.find((p) => p.name === formData.program)
-                            ?.courses || []
-                        ).length === 0
+                        (programs.find((p) => p.name === formData.program)?.courses || []).length === 0
                       }
                     >
                       <option value="">
                         {formData.program
-                          ? (
-                              programs.find((p) => p.name === formData.program)
-                                ?.courses || []
-                            ).length > 0
+                          ? (programs.find((p) => p.name === formData.program)?.courses || []).length > 0
                             ? "Select a course"
                             : "No courses available"
                           : "Select a program first"}
                       </option>
-                      {(
-                        programs.find((p) => p.name === formData.program)
-                          ?.courses || []
-                      ).map((c) => (
+                      {(programs.find((p) => p.name === formData.program)?.courses || []).map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>
@@ -481,7 +402,6 @@ const HeroSlider = () => {
                   </div>
                 </div>
 
-                {/* Message (full width) */}
                 <div className="form-group full">
                   <label htmlFor="message">Message (optional)</label>
                   <textarea
@@ -494,7 +414,6 @@ const HeroSlider = () => {
                   />
                 </div>
 
-                {/* Consent */}
                 <div className="form-group consent-group">
                   <label className="simple-checkbox">
                     <input
@@ -505,18 +424,11 @@ const HeroSlider = () => {
                       required
                     />
                     <span className="box"></span>
-                    By submitting this form, I consent to receive communications
-                    from the Sri Shanmugha Educational Institutions through
-                    WhatsApp, SMS, Email, phone Calls, and other channels, even
-                    if my number is registered with DND/NDNC. *
+                    By submitting this form, I consent to receive communications from the Sri Shanmugha Educational Institutions through WhatsApp, SMS, Email, phone Calls, and other channels, even if my number is registered with DND/NDNC. *
                   </label>
                 </div>
 
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  disabled={submitting}
-                >
+                <button type="submit" className="submit-btn" disabled={submitting}>
                   {submitting ? "Submitting..." : "Submit Enquiry"}
                 </button>
               </form>
@@ -524,43 +436,43 @@ const HeroSlider = () => {
           </div>
         </div>
       )}
+
       <style jsx>{`
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-        /* ... [All previous hero & popup styles remain unchanged] ... */
+        * {
+          box-sizing: border-box;
+        }
 
+        html, body {
+          margin: 0;
+          padding: 0;
+        }
+
+        /* ============ HERO BANNER ============ */
         .hero-banner {
           position: relative;
           width: 100%;
           height: 95vh;
           overflow: hidden;
           font-family: "Poppins", sans-serif;
+          min-height: 600px;
+          background: linear-gradient(180deg, rgba(66, 95, 189, 0.85) 0%, rgba(66, 95, 189, 0.5) 50%, rgba(66, 95, 189, 0.2) 100%);
         }
+
         .video-container {
           position: relative;
           width: 100%;
           height: 100%;
         }
-        // .video-background {
-        //   position: absolute;
-        //   top: 50%;
-        //   left: 50%;
-        //   transform: translate(-50%, -50%);
-        //   min-width: 90%;
-        //   min-height: 90%;
-        //   object-fit: cover;
-        //   z-index: 1;
-        // }
 
         .video-background {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-
           width: 120%;
           height: 120%;
-
           object-fit: cover;
           z-index: 1;
         }
@@ -568,12 +480,7 @@ const HeroSlider = () => {
         .hero-content-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(66, 95, 189, 0.85) 0%,
-            rgba(66, 95, 189, 0.5) 50%,
-            rgba(66, 95, 189, 0.2) 100%
-          );
+          
           z-index: 2;
           display: flex;
           align-items: center;
@@ -586,35 +493,40 @@ const HeroSlider = () => {
           margin: 0 auto;
           padding: 0 20px;
         }
+
         .hero-layout {
           display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 40px;
+          justify-content: space-around;
+          align-items: center;
+          gap: 60px;
+          flex-wrap: wrap;
+        
         }
 
         .hero-content {
+          flex: 0 0 auto;
+          min-width: 300px;
+          max-width: 550px;
           margin-top: 5%;
-          flex: 1;
-          max-width: 620px;
-          margin-left: -7%;
         }
+
         .hero-title {
-          font-size: 45px;
+          font-size: clamp(28px, 5vw, 45px);
           font-weight: 700;
           margin-bottom: 1rem;
           color: #fff;
-          max-width: 120ch;
-          line-height: 50px
+          line-height: 1.2;
         }
+
         .hero-subtitle {
-          font-size: 3rem;
+          font-size: clamp(24px, 4vw, 48px);
           font-weight: 600;
           margin-bottom: 1.2rem;
           color: #facc15;
         }
+
         .hero-description {
-          font-size: 1.6rem;
+          font-size: clamp(14px, 2.5vw, 16px);
           line-height: 1.55;
           margin-bottom: 2rem;
           color: #fff;
@@ -627,11 +539,8 @@ const HeroSlider = () => {
           gap: 1rem;
           width: 100%;
           max-width: 620px;
-          margin: 0 auto;
-          padding: 0 16px;
-          position: relative;
           z-index: 5;
-          margin-bottom: 1.5rem;
+          position: relative;
         }
 
         .btn {
@@ -639,13 +548,13 @@ const HeroSlider = () => {
           padding: 14px 20px;
           border-radius: 12px;
           font-weight: 700;
-          font-size: 1rem;
+          font-size: clamp(14px, 2vw, 16px);
           border: 2px solid transparent;
           cursor: pointer;
-          transition: 0.25s ease;
-          min-height: auto;
-          line-height: 1.3;
+          transition: all 0.25s ease;
           box-sizing: border-box;
+          display: block;
+          text-decoration: none;
         }
 
         .btn-primary {
@@ -653,22 +562,29 @@ const HeroSlider = () => {
           border-color: #facc15;
           color: rgb(7, 46, 162);
         }
+
         .btn-primary:hover {
           background: transparent;
           border-color: #fff;
           color: #fff;
+          transform: translateY(-2px);
         }
+
         .btn-secondary {
           background: transparent;
           color: #ffffff;
           border-color: #ffffff;
         }
+
         .btn-secondary:hover {
           background: rgba(255, 255, 255, 0.12);
+          transform: translateY(-2px);
         }
 
+        /* ============ CAMPUS UPDATES PANEL ============ */
         .campus-updates {
-          width: 400px;
+          width: 100%;
+          max-width: 400px;
           background: #fff;
           border-radius: 16px;
           padding: 20px;
@@ -680,12 +596,15 @@ const HeroSlider = () => {
           position: relative;
           z-index: 3;
         }
+
         .campus-updates.visible {
           display: block;
           opacity: 1;
         }
+
         .campus-updates.hidden {
           display: none;
+          opacity: 0;
         }
 
         .updates-header {
@@ -694,15 +613,17 @@ const HeroSlider = () => {
           padding-bottom: 10px;
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
+
         .updates-header h3 {
           margin: 0;
-          font-size: 2rem;
+          font-size: clamp(18px, 3vw, 24px);
           font-weight: 700;
           color: #111827;
         }
+
         .updates-header p {
           margin: 6px 0 0;
-          font-size: 1.05rem;
+          font-size: clamp(14px, 2vw, 16px);
           color: #6b7280;
         }
 
@@ -721,57 +642,69 @@ const HeroSlider = () => {
           cursor: pointer;
           color: #4b5563;
           z-index: 4;
+          transition: all 0.2s;
         }
+
         .close-updates:hover {
           background: rgba(0, 0, 0, 0.08);
           color: #111827;
         }
 
+        .updates-content {
+          max-height: calc(75vh - 100px);
+          overflow-y: auto;
+        }
+
         .update-item {
           margin-bottom: 14px;
         }
+
         .update-item.highlight {
           background: #e8f5e9;
           border-radius: 10px;
           padding: 10px;
         }
+
         .update-item h4 {
           margin: 0 0 6px;
-          font-size: 1.2rem;
+          font-size: clamp(14px, 2vw, 16px);
           color: #111827;
+          font-weight: 600;
         }
+
         .update-item p {
           margin: 0;
-          font-size: 1.05rem;
+          font-size: clamp(13px, 1.8vw, 14px);
           color: #4b5563;
         }
+
         .update-item.stat .update-number {
           display: block;
-          font-size: 2.4rem;
+          font-size: clamp(24px, 5vw, 32px);
           font-weight: 800;
           color: #3b82f6;
         }
+
         .update-item.stat .update-label {
-          font-size: 0.98rem;
+          font-size: clamp(12px, 1.8vw, 14px);
           color: #6b7280;
         }
 
         .contact-info {
           margin-top: 10px;
         }
+
         .contact-info p {
           margin: 4px 0;
-          font-size: 1rem;
+          font-size: clamp(12px, 2vw, 14px);
+          word-break: break-word;
         }
-        .email {
+
+        .contact-info .email {
           color: #2563eb;
         }
 
-        .desktop-only.campus-updates {
-          margin-top: 4%;
-          margin-right: 2%;
-        }
-
+        /* ============ UPDATES TOGGLE ============ */
         .updates-toggle {
           position: fixed;
           bottom: 24px;
@@ -789,30 +722,34 @@ const HeroSlider = () => {
           z-index: 5;
           cursor: pointer;
           font-weight: 600;
-          font-size: 0.95rem;
-          transition: transform 0.2s ease, background 0.2s ease;
+          font-size: clamp(12px, 2vw, 14px);
+          transition: all 0.2s ease;
         }
+
         .updates-toggle:hover {
           background: rgba(17, 24, 39, 1);
           transform: translateY(-2px);
         }
+
         .updates-toggle.visible {
           display: flex;
         }
+
         .updates-toggle.hidden {
           display: none;
         }
 
+        /* ============ POPUPS ============ */
         .mobile-updates-popup-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(0, 0, 0, 0.5);
           z-index: 9999;
           display: flex;
           justify-content: center;
           align-items: center;
           padding: 16px;
-          pointer-events: auto;
+          animation: fadeIn 0.3s ease;
         }
 
         .mobile-updates-popup {
@@ -821,14 +758,12 @@ const HeroSlider = () => {
           display: flex;
           justify-content: center;
           align-items: center;
-          pointer-events: none;
         }
 
         .popup-card {
           width: 100%;
           max-width: 400px;
-          max-height: 90vh;
-          pointer-events: auto;
+          max-height: 80vh;
         }
 
         .popup-overlay {
@@ -839,7 +774,7 @@ const HeroSlider = () => {
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 20px;
+          padding: 16px;
           animation: fadeIn 0.3s ease;
         }
 
@@ -855,10 +790,11 @@ const HeroSlider = () => {
         .popup-container {
           width: 100%;
           max-width: 500px;
-          height: 80vh;
-          max-height: 80vh;
+          max-height: 90vh;
           box-sizing: border-box;
           animation: slideUp 0.3s ease;
+          display: flex;
+          flex-direction: column;
         }
 
         @keyframes slideUp {
@@ -877,21 +813,22 @@ const HeroSlider = () => {
           border-radius: 16px;
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
           overflow: hidden;
-          height: 100%;
           display: flex;
           flex-direction: column;
+          max-height: 90vh;
         }
 
         .popup-header {
           background: #facc15;
-          color: white;
-          padding: 24px;
+          color: #111827;
+          padding: clamp(16px, 3vw, 24px);
           position: relative;
+          flex-shrink: 0;
         }
 
         .popup-header h3 {
           margin: 0;
-          font-size: 24px;
+          font-size: clamp(18px, 3vw, 24px);
           font-weight: 600;
           text-align: center;
         }
@@ -900,46 +837,62 @@ const HeroSlider = () => {
           position: absolute;
           top: 16px;
           right: 16px;
-          background: rgba(255, 255, 255, 0.2);
+          background: rgba(0, 0, 0, 0.1);
           border: none;
           border-radius: 50%;
           width: 36px;
           height: 36px;
           font-size: 24px;
-          color: white;
+          color: #111827;
           cursor: pointer;
           display: grid;
           place-items: center;
-          transition: background 0.2s;
+          transition: all 0.2s;
         }
 
         .close-popup:hover {
-          background: rgba(255, 255, 255, 0.3);
+          background: rgba(0, 0, 0, 0.2);
         }
 
-        /* === LANDSCAPE FORM STYLING === */
+        /* ============ FORM STYLING ============ */
         .admission-form {
-          padding: 32px;
-          flex: 1 1 auto;
+          padding: clamp(16px, 4vw, 32px);
+          flex: 1;
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+          /* Hide scrollbar while keeping scroll functionality */
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        /* Hide scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+        .admission-form::-webkit-scrollbar {
+          display: none;
         }
 
         .form-row {
-          display: flex;
-          gap: 16px;
-          margin-bottom: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(12px, 3vw, 16px);
+          margin-bottom: clamp(16px, 3vw, 20px);
+          flex-shrink: 0;
         }
 
         .form-group {
-          margin-bottom: 20px;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
         }
 
         .form-group.half {
-          flex: 1;
-          min-width: 0;
+          width: 100%;
         }
 
         .form-group.full {
+          grid-column: 1 / -1;
           width: 100%;
         }
 
@@ -948,20 +901,22 @@ const HeroSlider = () => {
           margin-bottom: 8px;
           font-weight: 500;
           color: #374151;
-          font-size: 14px;
+          font-size: clamp(12px, 2vw, 14px);
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
           width: 100%;
-          padding: 12px 16px;
+          padding: clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px);
           border: 1px solid #d1d5db;
           border-radius: 8px;
-          font-size: 16px;
+          font-size: clamp(14px, 2vw, 16px);
           font-family: "Poppins", sans-serif;
-          transition: border-color 0.2s, box-shadow 0.2s;
+          transition: all 0.2s;
           box-sizing: border-box;
+          background: white;
+          color: #111827;
         }
 
         .form-group input:focus,
@@ -970,6 +925,14 @@ const HeroSlider = () => {
           outline: none;
           border-color: #425fbd;
           box-shadow: 0 0 0 3px rgba(66, 95, 189, 0.1);
+          background: white;
+        }
+
+        .form-group input:disabled,
+        .form-group select:disabled {
+          background-color: #f3f4f6;
+          cursor: not-allowed;
+          color: #9ca3af;
         }
 
         .form-group textarea {
@@ -979,26 +942,8 @@ const HeroSlider = () => {
 
         .consent-group {
           margin-top: 12px;
-          margin-bottom: 24px;
-        }
-        .consent-label {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          font-size: 14px;
-          color: #374151;
-          line-height: 1.4;
-        }
-        .consent-label input[type="checkbox"] {
-          margin-top: 4px;
-          transform: scale(1.1);
-        }
-        .consent-label a {
-          color: #425fbd;
-          text-decoration: underline;
-        }
-        .consent-label a:hover {
-          color: #2d4ab3;
+          margin-bottom: clamp(16px, 3vw, 24px);
+          grid-column: 1 / -1;
         }
 
         .simple-checkbox {
@@ -1006,16 +951,15 @@ const HeroSlider = () => {
           align-items: flex-start;
           gap: 8px;
           cursor: pointer;
-          font-size: 14px;
+          font-size: clamp(12px, 2vw, 14px);
           line-height: 1.5;
+          color: #374151;
         }
 
-        /* hide native checkbox */
         .simple-checkbox input {
           display: none;
         }
 
-        /* box */
         .simple-checkbox .box {
           width: 16px;
           height: 16px;
@@ -1025,9 +969,9 @@ const HeroSlider = () => {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          transition: all 0.2s;
         }
 
-        /* tick (centered) */
         .simple-checkbox input:checked + .box::after {
           content: "✓";
           font-size: 12px;
@@ -1036,133 +980,345 @@ const HeroSlider = () => {
         }
 
         .submit-btn {
+          grid-column: 1 / -1;
           width: 100%;
           background: linear-gradient(135deg, #425fbd, #2d4ab3);
           color: white;
           border: none;
           border-radius: 8px;
-          padding: 16px;
-          font-size: 16px;
+          padding: clamp(12px, 2vw, 16px);
+          font-size: clamp(14px, 2vw, 16px);
           font-weight: 600;
           cursor: pointer;
-          transition: transform 0.2s, box-shadow 0.2s;
-          margin-top: 8px;
+          transition: all 0.2s;
+          margin-top: auto;
+          flex-shrink: 0;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
           transform: translateY(-2px);
           box-shadow: 0 8px 20px rgba(66, 95, 189, 0.3);
         }
 
-        /* Mobile: stack fields */
-        @media (max-width: 768px) {
-          .form-row {
-            flex-direction: column;
-            gap: 20px;
+        .submit-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        /* ============ DESKTOP STYLES (1025px+) ============ */
+        @media (min-width: 1025px) {
+          .hero-layout {
+            flex-wrap: nowrap;
+            gap: 40px;
           }
+
+          .hero-content {
+            margin-left: -7%;
+          }
+
+          .desktop-panel {
+            display: block !important;
+            margin-top: 4%;
+            margin-right: 2%;
+            flex-shrink: 0;
+          }
+
+          .desktop-toggle {
+            display: none !important;
+          }
+
+          .mobile-updates-popup-overlay {
+            display: none !important;
+          }
+        }
+
+        /* ============ TABLET STYLES (769px - 1024px) ============ */
+        @media (768px < width <= 1024px) {
+          .hero-banner {
+            height: 100vh;
+          }
+
+          .hero-layout {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+
+          .hero-content {
+            max-width: 100%;
+            margin-left: 0;
+            margin-top: 10%;
+            padding: 0 15px;
+          }
+
+          .desktop-panel {
+            display: none;
+          }
+
+          .desktop-toggle {
+            display: none;
+          }
+
+          .mobile-updates-popup-overlay {
+            display: flex;
+          }
+
+          .popup-container {
+            max-height: 85vh;
+          }
+
+          .form-row {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        /* ============ MOBILE STYLES (max 768px) ============ */
+        @media (max-width: 768px) {
+          .hero-banner {
+            height: 100vh;
+            min-height: 600px;
+          }
+
+          .hero-layout {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 20px;
+            padding-left: 3%;
+            padding-right: 3%;
+          }
+
+          .hero-content {
+            max-width: 100%;
+            margin-left: 0;
+            margin-top: 15%;
+            padding: 0;
+          }
+
+          .hero-title {
+            line-height: 1.1;
+          }
+
+          .hero-cta-buttons {
+            margin: 0;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+          }
+
+          .desktop-panel {
+            display: none !important;
+          }
+
+          .desktop-toggle {
+            display: none !important;
+          }
+
+          .mobile-updates-popup-overlay {
+            display: flex;
+          }
+
+          .popup-card {
+            max-height: 75vh;
+            width: 95%;
+            padding: 16px;
+          }
+
+          .popup-container {
+            max-height: 85vh;
+            max-width: 95%;
+          }
+
+          .popup-header {
+            padding: 16px 12px;
+          }
+
+          .popup-header h3 {
+            font-size: 18px;
+          }
+
+          .close-popup {
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+          }
+
+          .admission-form {
+            padding: 16px;
+          }
+
+          .form-row {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
           .form-group.half {
             width: 100%;
           }
         }
 
-        @media (min-width: 1025px) {
-          .campus-updates {
-            display: block;
-          }
-          .desktop-only.campus-updates {
-            display: block;
-          }
-          .mobile-updates-popup-overlay {
-            display: none;
-          }
-          .updates-toggle {
-            display: none;
-          }
-        }
-
-        @media (max-width: 1024px) {
-          .desktop-only.campus-updates {
-            display: none;
-          }
-          .updates-toggle {
-            display: flex;
-          }
-        }
-
-        @media (max-width: 768px) {
+        /* ============ SMALL MOBILE (max 480px) ============ */
+        @media (max-width: 480px) {
           .hero-banner {
             height: 100vh;
-            min-height: 100vh;
+            min-height: 500px;
           }
-          .hero-layout {
-            flex-direction: column;
-          }
-          .hero-content {
-            max-width: 100%;
-            margin-top: 14%;
-            margin-left: 0;
-            padding: 0 15px;
-            text-align: center;
-          }
-          .hero-cta-buttons {
-            flex-direction: column;
-          }
-          .hero-content-overlay {
-            padding-top: 190px;
-          }
-          .popup-card {
-            max-width: 95%;
-          }
-          .admission-form {
-            padding: 24px;
-          }
-          .popup-header {
-            padding: 20px;
-          }
-          .popup-header h3 {
-            font-size: 20px;
-          }
-        }
 
-        @media (max-width: 480px) {
-          .admission-form {
-            padding: 20px;
+          .hero-content {
+            margin-top: 20%;
+            padding: 0 12px;
           }
+
+          .hero-title {
+            font-size: 24px;
+            line-height: 1.1;
+          }
+
+          .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 1rem;
+          }
+
+          .hero-description {
+            font-size: 13px;
+            margin-bottom: 1.5rem;
+          }
+
+          .btn {
+            padding: 12px 16px;
+            font-size: 14px;
+          }
+
+          .popup-card {
+            width: 100%;
+            max-width: 90vw;
+            border-radius: 12px;
+          }
+
+          .popup-container {
+            max-width: 90vw;
+            padding: 8px;
+          }
+
+          .admission-popup {
+            border-radius: 12px;
+          }
+
+          .popup-header {
+            padding: 12px 10px;
+          }
+
+          .popup-header h3 {
+            font-size: 16px;
+          }
+
+          .close-popup {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            top: 10px;
+            right: 10px;
+          }
+
+          .admission-form {
+            padding: 12px;
+          }
+
+          .form-row {
+            gap: 12px;
+            margin-bottom: 16px;
+          }
+
+          .form-group label {
+            margin-bottom: 6px;
+            font-size: 12px;
+          }
+
           .form-group input,
           .form-group select,
           .form-group textarea {
-            padding: 10px 14px;
-            font-size: 15px;
+            padding: 9px 12px;
+            font-size: 14px;
+            border-radius: 6px;
           }
+
           .submit-btn {
-            padding: 14px;
-            font-size: 15px;
+            padding: 12px;
+            font-size: 14px;
+            margin-top: 6px;
+          }
+
+          .simple-checkbox {
+            font-size: 12px;
+          }
+
+          .updates-header h3 {
+            font-size: 18px;
+          }
+
+          .updates-header p {
+            font-size: 12px;
+          }
+
+          .contact-info p {
+            font-size: 12px;
+          }
+
+          .update-item h4 {
+            font-size: 14px;
+          }
+
+          .update-item p {
+            font-size: 12px;
           }
         }
 
-        /* Fallback for very short viewports: allow the popup to fit with a small margin */
+        /* ============ VERY SHORT VIEWPORTS ============ */
         @media (max-height: 600px) {
           .popup-container {
-            height: auto;
-            max-height: calc(100vh - 40px);
+            max-height: calc(100vh - 30px);
           }
+
           .admission-popup {
-            max-height: calc(100vh - 40px);
+            max-height: calc(100vh - 30px);
+          }
+
+          .admission-form {
+            padding: clamp(12px, 2vw, 20px);
           }
         }
 
-        /* Make the select rendered as a listbox (when size>1) scrollable inside the popup on touch devices */
-        .admission-popup select {
-          max-width: 100%;
+        /* ============ LANDSCAPE MODE ============ */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .hero-content {
+            margin-top: 2%;
+          }
+
+          .hero-banner {
+            height: 100vh;
+          }
+
+          .popup-container {
+            max-height: 95vh;
+          }
+
+          .admission-form {
+            padding: 12px;
+          }
         }
-        .admission-popup select[size] {
-          max-height: 70vh;
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 375px) {
-          ..hero-title.jsx-c2fcf90897928ac5 {
-            font-size: 32px;
+
+        /* ============ VERY LARGE SCREENS ============ */
+        @media (min-width: 1700px) {
+          .hero-title {
+            font-size: 56px;
+          }
+
+          .hero-subtitle {
+            font-size: 48px;
+          }
+
+          .hero-description {
+            font-size: 18px;
           }
         }
       `}</style>
