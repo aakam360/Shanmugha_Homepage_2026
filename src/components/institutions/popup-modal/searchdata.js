@@ -1,0 +1,196 @@
+const searchdata = [
+    {
+      title: 'Engineering College',
+      link: '/Engineering/all-course',
+      Description: 'The engineering college cultivates innovation, preparing students for diverse challenges through rigorous education and hands-on experience...',
+      search_words: [
+        "Mechanical Engineering",
+        "Electrical Engineering",
+        "Civil Engineering",
+        "Computer Science and Engineering",
+        "Chemical Engineering",
+        "Biomedical Engineering",
+        "Environmental Engineering",
+        "Industrial Engineering",
+        "Materials Science and Engineering",
+        "Petroleum Engineering",
+        "Electronics and Communication Engineering",
+        "Computer Engineering",
+        "Software Engineering",
+        "Information Technology",
+        "Automotive Engineering",
+        "Nuclear Engineering",
+        "Robotics Engineering",
+        "Structural Engineering",
+        "Geotechnical Engineering",
+        "Systems Engineering",
+        "Biotechnology Engineering",
+        "Ocean Engineering",
+        "Mining Engineering",
+        "Architectural Engineering",
+        "Telecommunication Engineering",
+        "Network Engineering",
+        "Instrumentation Engineering",
+        "Renewable Energy Engineering",
+        "Manufacturing Engineering",
+        "Cybersecurity Engineering",
+        "Mechatronics Engineering",
+        "Photonics Engineering",
+        "Water Resources Engineering",
+        "Aviation Engineering",
+        "Power Systems Engineering",
+        "VLSI Design Engineering",
+        "Control Systems Engineering",
+        "Railway Engineering",
+        "Energy Engineering",
+        "Thermal Engineering",
+        "Sustainable Engineering",
+        "Geomatics Engineering",
+        "Fire Protection Engineering",
+        "Urban Planning and Engineering",
+        "Naval Architecture and Marine Engineering",
+        "Engineering",
+        "Engineer"
+      ]
+      
+    },
+    {
+      title: 'About Us',
+      link: '/about/about-us',
+      Description: 'Sri Shanmugha Educational Institutions were established in 2011, with the belief that everyone should have accessibility and affordability ...',
+      search_words:  [
+        "Engineering College Overview",
+        "Mission and Vision",
+        "Values of Engineering College",
+        "History of the College",
+        "Accreditations and Rankings",
+        "Facilities and Infrastructure",
+        "Faculty and Staff",
+        "Research Initiatives",
+        "Industry Collaborations",
+        "Alumni Success Stories",
+        "Admissions Process",
+        "Diversity and Inclusion",
+        "Community Engagement",
+        "Student Life",
+        "Achievements and Awards",
+        "International Collaborations",
+        "Corporate Partnerships",
+        "Ethical Practices",
+        "Commitment to Excellence",
+        "Innovation in Education",
+        "Future Goals",
+      ],
+    },
+    {
+      title: 'FAQs',
+      link: '/contact/faq',
+      Description: 'Recent Question and comman doubts at FAQs....',
+      search_words:  [
+        "SSCET established year",
+        "SSCET affiliated university",
+        "Courses offered at SSCET",
+        "Meaning of NACC accreditation",
+        "Meaning of NBA accreditation",
+        "Eligibility criteria for admission B.E B.Tech M.E Anna University",
+        "Facilities offered at SSCET college",
+        "Transport facilities for students",
+        "Documents required at time of admission",
+        "Bank loan for studies",
+        "Management quota",
+      ]
+    },
+    
+    {
+      title: 'Placement Stats',
+      link: '/features/placements',
+      Description: 'Comprehensive placement statistics showcase success, industry ties, and career outcomes for our graduates....',
+      search_words:  [
+        "placement statistics",
+        "success outcomes",
+        "industry ties",
+        "career growth",
+        "employment trends",
+        "alumni success",
+        "job roles",
+        "salary statistics",
+        "hiring companies",
+        "job placement",
+        "graduate success",
+        "career pathways",
+        "job market trends",
+        "workforce outcomes",
+        "employment data",
+      ]
+    },
+    {
+      title: 'Quick Link',
+      link: '/contact/quick-link',
+      Description: 'Explore quick links for convenient access to bus stops, nearby hospitals, and hostel details.',
+      search_words: [
+        'Bus Stop Location',
+        'Nearby Hospitals',
+        'Hostel Information',
+        'Local Amenities',
+        'Campus Accessibility',
+        'Transportation Facilities'
+      ]
+    },
+    {
+      title: 'Events',
+      link: '/features/activities',
+      Description: 'Stay updated with our vibrant community through the latest and most famous events on campus.',
+      search_words: [
+        'Latest Events',
+        'Famous Events',
+        'Community Gatherings',
+        'Celebrations',
+        'Cultural Events',
+        'Student Activities',
+        'Workshops and Seminars'
+      ]
+    },
+    {
+      title: 'Exam Cell',
+      link: '/features/exam-cell',
+      Description: 'Navigate the exam cell for detailed information on examination procedures and schedules.',
+      search_words: [
+        'Examination Procedures',
+        'Exam Schedule',
+        'Grading System',
+        'Results Declaration',
+        'Exam Policies',
+        'Advisory for Students'
+      ]
+    },
+    {
+      title: 'Research',
+      link: '/features/research',
+      Description: 'Delve into our world of cutting-edge research and explore ongoing research initiatives.',
+      search_words: [
+        'Cutting-edge Research',
+        'Research Initiatives',
+        'Research Facilities',
+        'Collaborative Research',
+        'Publication Highlights',
+        'Research Conferences',
+        'Faculty Research Profiles'
+      ]
+    },
+    {
+      title: 'Guest',
+      link: '/features/guest',
+      Description: 'Discover enriching experiences with guest lectures and speakers, contributing to a diverse learning environment.',
+      search_words: [
+        'Guest Lectures',
+        'Guest Speakers',
+        'Industry Experts',
+        'Distinguished Visitors',
+        'Expert Talks',
+        'Knowledge Sharing Sessions',
+        'Interactive Sessions'
+      ]
+    },
+  ]
+
+  export default searchdata;

@@ -1,0 +1,16 @@
+.edu-header .header-brand img.logo-light {
+    max-width: 300px; 
+    @media only screen and (max-width: 1550px) {
+       max-width: 200px; 
+    }
+}
+
+/*--------------------------
+    Pharmacy LOGO Styles 
+----------------------------*/
+.pharmacy-header .pharmacy-header-brand img.pharmacy-logo-light {
+    max-width: 300px; 
+    @media only screen and (max-width: 1550px) {
+       max-width: 420px; 
+    }
+}
