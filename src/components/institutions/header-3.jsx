@@ -15,12 +15,12 @@ const Header = () => {
 
   // Mock data
   const institutionsData = [
-    { label: "Engineering College", icon: "🏛️", href: "#" },
+    { label: "Engineering College", icon: "🏛️", href: "https://engineering.shanmugha.edu.in/" },
     // { label: "Arts & Science", icon: "📚", href: "#" },
-    { label: "Pharmacy", icon: "💊", href: "#" },
-    { label: "Nursing", icon: "⚕️", href: "#" },
-    { label: "Medical Science & Research", icon: "💼", href: "#" },
-    { label: "Allied Health Science", icon: "🎓", href: "#" },
+    { label: "Pharmacy", icon: "💊", href: "https://shanmughapharmacy.edu.in/" },
+    { label: "Nursing", icon: "⚕️", href: "https://shanmughanursing.edu.in/" },
+    { label: "Medical Science & Research", icon: "💼", href: "https://shanmugha-msr-website.onrender.com" },
+    { label: "Allied Health Science", icon: "🎓", href: "https://shanmugha-ahs-website.onrender.com" },
   ];
 
   const contactLinks = [

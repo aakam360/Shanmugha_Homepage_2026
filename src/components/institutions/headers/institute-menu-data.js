@@ -14,7 +14,7 @@ const institute_menu_data = [
     submenus: [
       {
         title: "Engineering",
-        link: "/Engineering_College",
+        link: "https://engineering.shanmugha.edu.in/",
         icon: true,
         icon_name: "safety_divider_black_48dp.svg",
         mega_submenu: [],
@@ -38,7 +38,7 @@ const institute_menu_data = [
 
         icon: true,
         icon_name: "biotech_black_48dp.svg",
-        link: "/Medical_Science&Research_College",
+        link: "https://shanmugha-msr-website.onrender.com",
         mega_submenu: [],
       },
 
@@ -46,7 +46,7 @@ const institute_menu_data = [
         title: "Allied Health Science",
         icon: true,
         icon_name: "medical_information_black_48dp.svg",
-        link: "/DHI_College",
+        link: "https://shanmugha-ahs-website.onrender.com",
         mega_submenu: [],
       },
       
