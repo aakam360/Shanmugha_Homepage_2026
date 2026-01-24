@@ -15,7 +15,7 @@ const institutions = [
   {
     title: 'ENGINEERING & TECHNOLOGY',
     description: 'Cutting-edge programs in AI, Computer Science, and Engineering focused on innovation.',
-    link: '/Engineering_College',
+    link: 'https://engineering.shanmugha.edu.in/',
     iconSrc: '/assets/images/logo/png/engglogo-01-4-1.png',
     programs: '5 UG Programs',
   },
@@ -35,14 +35,14 @@ const institutions = [
   },
   {
     title: 'MEDICAL SCIENCE & RESEARCH',
-    link: '/Medical_Science&Research_College',
+    link: 'https://shanmugha-msr-website.onrender.com',
     iconSrc: '/assets/images/logo/png/Shanmugha-Medical-Science-Logo-Print-01.png',
     programs: '4 Programs',
     description: 'Transforming healthcare through strong medical education and advanced research initiatives',
   },
   {
     title: 'ALLIED HEALTH',
-    link: '/DHI_College',
+    link: 'https://shanmugha-ahs-website.onrender.com',
     iconSrc: '/assets/images/logo/png/ahslogo-01.png',
     programs: '4 Programs',
     description: 'Advancing healthcare support services with advanced allied health programs',

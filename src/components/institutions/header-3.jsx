@@ -1,5 +1,10 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
+import EngineeringIcon from '@mui/icons-material/Engineering'; // Engineering
+import MedicationIcon from '@mui/icons-material/Medication'; // Pharmacy
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital'; // Nursing
+import ScienceIcon from '@mui/icons-material/Science'; // Medical Science
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety'; // Allied Health
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,20 +19,37 @@ const Header = () => {
   const navRef = useRef(null);
 
   // Mock data
-  const institutionsData = [
-    { label: "Engineering College", icon: "🏛️", href: "https://engineering.shanmugha.edu.in/" },
-    // { label: "Arts & Science", icon: "📚", href: "#" },
-    { label: "Pharmacy", icon: "💊", href: "https://shanmughapharmacy.edu.in/" },
-    { label: "Nursing", icon: "⚕️", href: "https://shanmughanursing.edu.in/" },
-    { label: "Medical Science & Research", icon: "💼", href: "https://shanmugha-msr-website.onrender.com" },
-    { label: "Allied Health Science", icon: "🎓", href: "https://shanmugha-ahs-website.onrender.com" },
-  ];
-
+const institutionsData = [
+  { 
+    label: "Engineering College", 
+    icon: <EngineeringIcon />, 
+    href: "https://engineering.shanmugha.edu.in/" 
+  },
+  { 
+    label: "Pharmacy", 
+    icon: <MedicationIcon />, 
+    href: "https://shanmughapharmacy.edu.in/" 
+  },
+  { 
+    label: "Nursing", 
+    icon: <LocalHospitalIcon />, 
+    href: "https://shanmughanursing.edu.in/" 
+  },
+  { 
+    label: "Medical Science & Research", 
+    icon: <ScienceIcon />, 
+    href: "https://shanmugha-msr-website.onrender.com" 
+  },
+  { 
+    label: "Allied Health Science", 
+    icon: <HealthAndSafetyIcon />, 
+    href: "https://shanmugha-ahs-website.onrender.com" 
+  },
+];
   const contactLinks = [
-    { label: "Email", href: "mailto:admissions@shanmugha.edu.in" },
-    { label: "Phone", href: "tel:0428-335-9999" },
-    { label: "Address", href: "#" },
-  ];
+    { label: "FAQ", href: "/faq" }, // Updated based on your contactLinks.js
+    { label: "Contact Us", href: "/contact" }, // This now points to your new page
+];
 
   // Scroll detection
   useEffect(() => {
@@ -115,18 +137,20 @@ const Header = () => {
                 </button>
 
                 <div className="institutions-menu">
-                  {institutionsData.map((item, i) => (
-                    <a
-                      key={i}
-                      href={item.href}
-                      className="institution-item"
-                      onClick={closeAll}
-                    >
-                      <img src={item.icon} alt={item.label} />
-                      <span>{item.label}</span>
-                    </a>
-                  ))}
-                </div>
+  {institutionsData.map((item, i) => (
+    <a
+      key={i}
+      href={item.href}
+      className="institution-item"
+      onClick={closeAll}
+    >
+      <span className="icon-wrapper">
+        {item.icon}
+      </span>
+      <span>{item.label}</span>
+    </a>
+  ))}
+</div>
               </li>
 
               <li>
