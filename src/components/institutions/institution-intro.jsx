@@ -29,14 +29,14 @@ const InstitutionIntro = () => {
   const announcementText =
     "Admissions for the academic year 2026-2027 are now open! ✨ New courses launched in Artificial Intelligence and Data Science.";
 
-  const newsData = [
-    { date: "Tue, 08/05/2025 - 10:56", title: "AICTE IDEA LAB - Tender Notification - SIST" },
-    { date: "Wed, 07/30/2025 - 10:25", title: "Global and National Recognitions" },
-    { date: "Tue, 07/29/2025 - 11:27", title: "The WEEK - Rankings 2025" },
-    { date: "Tue, 06/10/2025 - 09:10", title: "New Research Labs Inaugurated" },
-    { date: "Fri, 05/30/2025 - 14:30", title: "Placements Drive 2025 - Over 400 Offers!" },
-    { date: "Mon, 05/15/2025 - 11:00", title: "Workshop on Innovation and Startups" },
-  ];
+const newsData = [
+    { date: "Tue, 20/01/2026 - 09:30", title: "Inaguration Cermony-Dr.V.Irai Anbu Mentoring Programme" },
+    { date: "Wed, 28/01/2026 - 10:30", title: "Siragai Viri Uyara Para" },
+    { date: "Tue, 20/01/2026 - 09:00", title: "4th National Pharmacy Week Celebration -Arokyam'25" },
+    { date: "Fri, 05/12/2025 - 11:30", title: "Valedictory Cermony" },
+    { date: "Sun, 07/12/2025 - 10:30", title: "Parents fest '25!" },
+    { date: "Wed, 24/12/2025 - 09:00", title: "Neptune'25 and Kalam '25" },
+  ]
 
   return (
     <div className="institution-intro">
@@ -203,7 +203,7 @@ const InstitutionIntro = () => {
               >
                 <Box
                   component="img"
-                  src="/assets/images/ShanmughaImages.jpg"
+                  src="/assets/images/natarajan.jpeg"
                   alt="Latest News"
                   sx={{
                     width: "100%",
@@ -227,7 +227,7 @@ const InstitutionIntro = () => {
                     color="text.secondary"
                     sx={{ mb: 0.5, fontSize: { xs: "0.9rem", md: "1rem" } }}
                   >
-                    Tue, 07/29/2025 - 11:27
+                    Mon, 19/01/2025
                   </Typography>
                   <Typography
                     variant="h6"
@@ -238,9 +238,9 @@ const InstitutionIntro = () => {
                       fontSize: { xs: "1.4rem", md: "1.6rem" },
                     }}
                   >
-                    The WEEK - Rankings 2025
+                    Welcome Our Brand Ambassador
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     component="a"
                     href="https://www.figma.com/design/cWdSpdIVvDboRfNhof56QF/SSEI?node-id=0-1&p=f"
                     target="_blank"
@@ -254,7 +254,7 @@ const InstitutionIntro = () => {
                     }}
                   >
                     Read More →
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
               </Card>
             </Grid>

@@ -103,6 +103,7 @@ const institutionsData = [
       <header className={`edu-header ${scrolled ? "scrolled" : ""}`}>
         <div className="header-container">
           {/* LOGO */}
+          <a href="/">
           <div className="header-logo">
             <img
               src={
@@ -112,7 +113,7 @@ const institutionsData = [
               }
               alt="Sri Shanmugha Educational Institutions"
             />
-          </div>
+          </div></a>
 
           {/* NAV - DESKTOP */}
           <nav className="header-nav desktop-nav" ref={navRef}>
@@ -188,9 +189,18 @@ const institutionsData = [
           {/* ACTIONS */}
           <div className="header-actions desktop-actions">
             <div className="divider"></div>
-            <button className="apply-btn" onClick={() => window.dispatchEvent(new Event('openAdmissionPopup'))}>
+            {/* <button className="apply-btn" onClick={() => window.dispatchEvent(new Event('openAdmissionPopup'))}>
               Apply Now
-            </button>
+            </button> */}
+            <a
+  href="https://newadmissions.shanmugha.edu.in/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="apply-btn"
+>
+  Apply Now
+</a>
+
           </div>
 
           {/* HAMBURGER */}
@@ -269,9 +279,18 @@ const institutionsData = [
               )}
             </div>
 
-            <button className="apply-btn mobile-apply-btn" onClick={() => { setMenuOpen(false); window.dispatchEvent(new Event('openAdmissionPopup')); }}>
+            {/* <button className="apply-btn mobile-apply-btn" onClick={() => { setMenuOpen(false); window.dispatchEvent(new Event('openAdmissionPopup')); }}>
               Apply Now
-            </button>
+            </button> */}
+            <a
+  href="https://newadmissions.shanmugha.edu.in/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn btn-primary"
+>
+  Apply Now
+</a>
+
           </div>
         </nav>
       </header>

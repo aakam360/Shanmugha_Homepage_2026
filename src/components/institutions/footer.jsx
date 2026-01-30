@@ -411,24 +411,21 @@ const Footer = () => {
               innovation, research, and holistic development of students across
               multiple disciplines.
             </p>
-
+{/* 
             <div className="stats">
               <div className="stat">
-                <strong>NAAC A+</strong>
+                <strong>NAAC A</strong>
                 <span>Accredited</span>
               </div>
               <div className="stat">
                 <strong>5000+</strong>
                 <span>Students</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="socials">
               <a href="https://facebook.com" target="_blank">
                 <FacebookIcon />
-              </a>
-              <a href="https://x.com" target="_blank">
-                <XIcon />
               </a>
               <a
                 href="https://www.instagram.com/shanmughainstitutions/?hl=en"
@@ -477,7 +474,7 @@ const Footer = () => {
         </div>
 
         {/* SUBSCRIBE SECTION */}
-        <div className="footer-subscribe">
+        {/* <div className="footer-subscribe">
           <div className="subscribe-text">
             <h4>Stay Updated</h4>
             <p>Get the latest news and updates</p>
@@ -486,20 +483,21 @@ const Footer = () => {
             <input placeholder="Enter your email" />
             <button>Subscribe</button>
           </div>
-        </div>
+        </div> */}
 
         {/* BOTTOM BAR */}
         <div className="footer-bottom">
           <span>© 2026 Sri Shanmugha Educational Institutions</span>
           <div className="bottom-links">
-            <a>Privacy Policy</a>
-            <a>Terms of Service</a>
-            <a>Sitemap</a>
+
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-and-conditions">Terms of Service</a>
+            {/* <a>Sitemap</a> */}
           </div>
-          <div className="badges">
+          {/* <div className="badges">
             <span className="badge green">NAAC A+ Accredited</span>
             <span className="badge blue">ISO Certified</span>
-          </div>
+          </div> */}
         </div>
       </footer>
 

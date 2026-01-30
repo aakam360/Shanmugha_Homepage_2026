@@ -17,13 +17,13 @@ const institutions = [
     description: 'Cutting-edge programs in AI, Computer Science, and Engineering focused on innovation.',
     link: 'https://engineering.shanmugha.edu.in/',
     iconSrc: '/assets/images/logo/png/engglogo-01-4-1.png',
-    programs: '5 UG Programs',
+    programs: '10 UG & 2 PG Programs',
   },
   {
     title: 'PHARMACY',
     link: 'https://shanmughapharmacy.edu.in/',
     iconSrc: '/assets/images/logo/png/pharmacylogo-01-3.png',
-    programs: '6 Programs',
+    programs: '5 Programs',
     description: 'Shaping future pharmacists through advanced education, research, and clinical practice.',
   },
   {
@@ -37,14 +37,14 @@ const institutions = [
     title: 'MEDICAL SCIENCE & RESEARCH',
     link: 'https://shanmugha-msr-website.onrender.com',
     iconSrc: '/assets/images/logo/png/Shanmugha-Medical-Science-Logo-Print-01.png',
-    programs: '4 Programs',
+    programs: '9 Programs',
     description: 'Transforming healthcare through strong medical education and advanced research initiatives',
   },
   {
     title: 'ALLIED HEALTH',
     link: 'https://shanmugha-ahs-website.onrender.com',
     iconSrc: '/assets/images/logo/png/ahslogo-01.png',
-    programs: '4 Programs',
+    programs: '9 Programs',
     description: 'Advancing healthcare support services with advanced allied health programs',
   },
 ];
@@ -235,24 +235,24 @@ const Sets = () => {
               mb: 4,
             }}
           >
-            <Box
+            {/* <Box
               component="img"
               src="/assets/images/batch-images/1.png"
               alt="Accreditation 1"
               sx={{ height: { xs: 110, md: 150 } }}
-            />
+            /> */}
             <Box
               component="img"
               src="/assets/images/batch-images/3.png"
               alt="Accreditation 2"
               sx={{ height: { xs: 110, md: 150 } }}
             />
-            <Box
+            {/* <Box
               component="img"
               src="/assets/images/batch-images/1.png"
               alt="Accreditation 3"
               sx={{ height: { xs: 110, md: 150 } }}
-            />
+            /> */}
           </Box>
 
           <Typography

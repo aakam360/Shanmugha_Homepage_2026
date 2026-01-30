@@ -50,12 +50,12 @@ const ContactUs = () => {
     {
       icon: <LocationOnIcon sx={{ color: '#FFC107', fontSize: { xs: 24, md: 30 } }} />,
       title: "Our Location",
-      details: ["Sankagiri - Salem Main Road,", "Pullipalayam, Morur (PO),", "Sankagiri (TK), Salem - 637304."]
+      details: ["Pullipalayam, Morur(P.O),Sankari (T.K). Salem (D.T.), Tamil Nadu – 637 304."]
     },
     {
       icon: <PhoneIcon sx={{ color: '#FFC107', fontSize: { xs: 24, md: 30 } }} />,
       title: "Phone Number",
-      details: ["+91 4283 262999", "0428-335-9999"]
+      details: ["+91  73392 45999"]
     },
     {
       icon: <EmailIcon sx={{ color: '#FFC107', fontSize: { xs: 24, md: 30 } }} />,
@@ -218,7 +218,7 @@ const ContactUs = () => {
           <iframe
             title="Map"
             id="gmap_canvas" 
-            src="https://maps.google.com/maps?q=Shanmugha%20College%20of%20Engineering&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3910.6264417265593!2d77.87631917155073!3d11.434636473027117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba961284b77fe25%3A0x6bc69b28b6037366!2sSri%20Shanmugha%20Educational%20Institution!5e0!3m2!1sen!2sin!4v1769752364615!5m2!1sen!2sin" 
             width="100%"
             height="100%"
             style={{ border: 0 }}

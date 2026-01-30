@@ -172,9 +172,18 @@ const HeroSlider = () => {
                   Pioneering Innovation in Higher Education Since 2010. With 15+ Years of Educational Excellence, 20,000+ Students Transformed, 100+ Quality Awards, and 95% Placement Success.
                 </p>
                 <div className="hero-cta-buttons">
-                  <button className="btn btn-primary" onClick={openAdmissionPopup}>
+                  {/* <button className="btn btn-primary" onClick={openAdmissionPopup}>
                     Apply Now
-                  </button>
+                  </button> */}
+                  <a
+                    href="https://newadmissions.shanmugha.edu.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                  >
+                    Apply Now
+                  </a>
+
                   <a href="/assets/docs/brochure.pdf" className="btn btn-secondary" download>
                     Download Brochure
                   </a>
@@ -474,7 +483,7 @@ const HeroSlider = () => {
           width: 120%;
           height: 120%;
           object-fit: cover;
-          z-index: 1;
+          z-index: -1;
         }
 
         .hero-content-overlay {
@@ -484,7 +493,7 @@ const HeroSlider = () => {
           z-index: 2;
           display: flex;
           align-items: center;
-          color: white;
+          color: green;
         }
 
         .container {
