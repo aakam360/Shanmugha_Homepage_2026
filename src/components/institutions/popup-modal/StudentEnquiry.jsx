@@ -668,7 +668,6 @@
 //   );
 // }
 
-
 "use client"; // REQUIRED for Next.js 14+
 
 import React, { useEffect, useRef, useState } from "react";
@@ -792,20 +791,51 @@ export default function StudentEnquiry() {
         {/* Header */}
         <div style={{ padding: "1.5rem", borderBottom: "1px solid #f3f4f6" }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 600 }}>
-                Student Enquiry Form
-              </h2>
-              <p
-                style={{
-                  marginTop: "0.5rem",
-                  fontSize: "0.875rem",
-                  color: "#6b7280",
-                }}
-              >
-                Please provide your details to help us assist you better.
-              </p>
-            </div>
+            <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem",
+  }}
+>
+  {/* Logo */}
+  <img
+    src="/assets/images/logo/ssei-only-logo.png"
+    alt="Sri Shanmugha Educational Institutions"
+    style={{
+      height: "52px",
+      objectFit: "contain",
+      flexShrink: 0,
+    }}
+  />
+
+  {/* Header Text */}
+  <div>
+    <h2
+      style={{
+        margin: 0,
+        fontSize: "1.5rem",
+        fontWeight: 600,
+        color: "#111827",
+        lineHeight: "1.2",
+      }}
+    >
+      Student Enquiry Form
+    </h2>
+
+    <p
+      style={{
+        marginTop: "0.25rem",
+        fontSize: "0.875rem",
+        color: "#6b7280",
+        lineHeight: "1.4",
+      }}
+    >
+      Please provide your details to help us assist you better.
+    </p>
+  </div>
+</div>
+
             <button
               onClick={closeModal}
               aria-label="Close enquiry form"
