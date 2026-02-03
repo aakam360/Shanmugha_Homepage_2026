@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "../components/institutions/redux/StoreProvider";
+import StudentEnquiry from "../components/institutions/popup-modal/StudentEnquiry";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -26,15 +27,14 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={`${poppins.variable} antialiased`}
       >
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <StudentEnquiry />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
 }
-
-
-
-
 
 // import { Poppins } from "next/font/google";
 // import type { ReactNode } from "react";
@@ -52,5 +52,3 @@ export default function RootLayout({
 //     </html>
 //   );
 // }
-
-
