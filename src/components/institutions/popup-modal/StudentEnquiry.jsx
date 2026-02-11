@@ -690,6 +690,7 @@ export default function StudentEnquiry() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [mounted, setMounted] = useState(false);
+  const [success, setSuccess] = useState(false);
   const firstInputRef = useRef(null);
 
   useEffect(() => {
@@ -698,8 +699,7 @@ export default function StudentEnquiry() {
 
   useEffect(() => {
     if (!mounted) return;
-    const submitted = localStorage.getItem("studentEnquirySubmitted");
-    if (!submitted) setOpen(true);
+    setOpen(true);
   }, [mounted]);
 
   useEffect(() => {
@@ -736,22 +736,44 @@ export default function StudentEnquiry() {
 
     setSubmitting(true);
     try {
+      // Format payload according to API requirements
       const payload = {
-        name,
-        email,
-        phone,
-        program,
-        consent,
-        submittedAt: new Date().toISOString(),
+        fullName: name,
+        mobileNumber: phone,
+        email: email,
+        program: program,
       };
 
-      await new Promise((r) => setTimeout(r, 700));
-      console.log("Student enquiry submitted:", payload);
+      // Send to API
+      const response = await fetch(
+        "https://apiaakam.shanmugha.edu.in/api/admission",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        },
+      );
 
-      localStorage.setItem("studentEnquirySubmitted", "true");
-      setOpen(false);
-    } catch {
-      setError("Submission failed. Please try again.");
+      if (!response.ok) {
+        throw new Error(`API error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("Student enquiry submitted successfully:", result);
+
+      // Show success screen
+      setSuccess(true);
+
+      // Close modal after 3 seconds
+      setTimeout(() => {
+        setOpen(false);
+        setSuccess(false);
+      }, 3000);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setError(err.message || "Submission failed. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -786,194 +808,303 @@ export default function StudentEnquiry() {
           borderRadius: "12px",
           border: "1px solid #e5e7eb",
           boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          overflow: "hidden",
         }}
       >
-        {/* Header */}
-        <div style={{ padding: "1.5rem", borderBottom: "1px solid #f3f4f6" }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {success ? (
+          /* Success Screen */
+          <div
+            style={{
+              padding: "3rem 2rem",
+              textAlign: "center",
+              minHeight: "400px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {/* Success Icon */}
             <div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-  }}
->
-  {/* Logo */}
-  <img
-    src="/assets/images/logo/ssei-only-logo.png"
-    alt="Sri Shanmugha Educational Institutions"
-    style={{
-      height: "52px",
-      objectFit: "contain",
-      flexShrink: 0,
-    }}
-  />
+              style={{
+                width: "80px",
+                height: "80px",
+                borderRadius: "50%",
+                backgroundColor: "#d1fae5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "1.5rem",
+                animation: "scaleIn 0.5s ease-out",
+              }}
+            >
+              <span style={{ fontSize: "2.5rem", color: "#059669" }}>✓</span>
+            </div>
 
-  {/* Header Text */}
-  <div>
-    <h2
-      style={{
-        margin: 0,
-        fontSize: "1.5rem",
-        fontWeight: 600,
-        color: "#111827",
-        lineHeight: "1.2",
-      }}
-    >
-      Student Enquiry Form
-    </h2>
+            {/* Success Message */}
+            <h2
+              style={{
+                fontSize: "1.75rem",
+                fontWeight: 600,
+                color: "#065f46",
+                margin: "0 0 0.75rem",
+              }}
+            >
+              Thank You!
+            </h2>
 
-    <p
-      style={{
-        marginTop: "0.25rem",
-        fontSize: "0.875rem",
-        color: "#6b7280",
-        lineHeight: "1.4",
-      }}
-    >
-      Please provide your details to help us assist you better.
-    </p>
-  </div>
-</div>
+            <p
+              style={{
+                fontSize: "1rem",
+                color: "#111827",
+                margin: "0 0 1rem",
+                lineHeight: "1.6",
+              }}
+            >
+              Your enquiry has been submitted successfully.
+            </p>
+
+            <p
+              style={{
+                fontSize: "0.875rem",
+                color: "#6b7280",
+                margin: "0 0 1.5rem",
+                lineHeight: "1.5",
+              }}
+            >
+              We will get in touch with you soon at {email}
+            </p>
 
             <button
-              onClick={closeModal}
-              aria-label="Close enquiry form"
+              onClick={() => {
+                setOpen(false);
+                setSuccess(false);
+              }}
               style={{
-                background: "none",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "8px",
                 border: "none",
-                fontSize: "1.25rem",
+                backgroundColor: "#3b82f6",
+                color: "#ffffff",
+                fontSize: "0.9375rem",
                 cursor: "pointer",
-                color: "#6b7280",
               }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = "#2563eb")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = "#3b82f6")
+              }
             >
-              ✕
+              Close
             </button>
+
+            <style jsx>{`
+              @keyframes scaleIn {
+                from {
+                  transform: scale(0.5);
+                  opacity: 0;
+                }
+                to {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+              }
+            `}</style>
           </div>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit}>
-          <div style={{ padding: "1.5rem" }}>
-            {/* 2-column grid */}
+        ) : (
+          /* Form Screen */
+          <>
+            {/* Header */}
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                gap: "1.25rem",
-              }}
+              style={{ padding: "1.5rem", borderBottom: "1px solid #f3f4f6" }}
             >
-              <input
-                ref={firstInputRef}
-                placeholder="Full Name *"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                style={inputStyle}
-              />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  {/* Logo */}
+                  <img
+                    src="/assets/images/logo/ssei-only-logo.png"
+                    alt="Sri Shanmugha Educational Institutions"
+                    style={{
+                      height: "52px",
+                      objectFit: "contain",
+                      flexShrink: 0,
+                    }}
+                  />
 
-              <input
-                type="email"
-                placeholder="Email Address *"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                style={inputStyle}
-              />
+                  {/* Header Text */}
+                  <div>
+                    <h2
+                      style={{
+                        margin: 0,
+                        fontSize: "1.5rem",
+                        fontWeight: 600,
+                        color: "#111827",
+                        lineHeight: "1.2",
+                      }}
+                    >
+                      Student Enquiry Form
+                    </h2>
 
-              <input
-                placeholder="Phone Number *"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                style={inputStyle}
-              />
+                    <p
+                      style={{
+                        marginTop: "0.25rem",
+                        fontSize: "0.875rem",
+                        color: "#6b7280",
+                        lineHeight: "1.4",
+                      }}
+                    >
+                      Please provide your details to help us assist you better.
+                    </p>
+                  </div>
+                </div>
 
-              <select
-                value={program}
-                onChange={(e) => setProgram(e.target.value)}
-                required
-                style={inputStyle}
-              >
-                <option value="">Select Program *</option>
-                {PROGRAMS.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Consent */}
-            <label
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "0.75rem",
-                marginTop: "1.25rem",
-                fontSize: "0.875rem",
-                color: "#374151",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={consent}
-                onChange={(e) => setConsent(e.target.checked)}
-                required
-                style={{
-                  marginTop: "0.2rem",
-                  width: "16px",
-                  height: "16px",
-                  accentColor: "#3b82f6",
-                  backgroundColor: "#ffffff",
-                  colorScheme: "light",
-                }}
-              />
-              By submitting this form, I consent to receive communications from
-              the Sri Shanmugha Educational Institutions through WhatsApp, SMS,
-              Email, phone Calls, and other channels, even if my number is
-              registered with DND/NDNC.
-            </label>
-
-            {/* Error */}
-            {error && (
-              <div
-                style={{
-                  marginTop: "1rem",
-                  color: "#b91c1c",
-                  fontSize: "0.875rem",
-                }}
-              >
-                ⚠ {error}
+                <button
+                  onClick={closeModal}
+                  aria-label="Close enquiry form"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    fontSize: "1.25rem",
+                    cursor: "pointer",
+                    color: "#6b7280",
+                  }}
+                >
+                  ✕
+                </button>
               </div>
-            )}
-
-            {/* Actions */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginTop: "1.5rem",
-              }}
-            >
-              <button
-                type="submit"
-                disabled={submitting}
-                style={{
-                  padding: "0.75rem 1.5rem",
-                  borderRadius: "8px",
-                  border: "none",
-                  backgroundColor: submitting ? "#93c5fd" : "#3b82f6",
-                  color: "#ffffff",
-                  fontSize: "0.9375rem",
-                  cursor: submitting ? "not-allowed" : "pointer",
-                }}
-              >
-                {submitting ? "Submitting..." : "Submit Enquiry"}
-              </button>
             </div>
-          </div>
-        </form>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
+              <div style={{ padding: "1.5rem" }}>
+                {/* 2-column grid */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                    gap: "1.25rem",
+                  }}
+                >
+                  <input
+                    ref={firstInputRef}
+                    placeholder="Full Name *"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    style={inputStyle}
+                  />
+
+                  <input
+                    type="email"
+                    placeholder="Email Address *"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    style={inputStyle}
+                  />
+
+                  <input
+                    placeholder="Phone Number *"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    style={inputStyle}
+                  />
+
+                  <select
+                    value={program}
+                    onChange={(e) => setProgram(e.target.value)}
+                    required
+                    style={inputStyle}
+                  >
+                    <option value="">Select Program *</option>
+                    {PROGRAMS.map((p) => (
+                      <option key={p} value={p}>
+                        {p}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Consent */}
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "0.75rem",
+                    marginTop: "1.25rem",
+                    fontSize: "0.875rem",
+                    color: "#374151",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    required
+                    style={{
+                      marginTop: "0.2rem",
+                      width: "16px",
+                      height: "16px",
+                      accentColor: "#3b82f6",
+                      backgroundColor: "#ffffff",
+                      colorScheme: "light",
+                    }}
+                  />
+                  By submitting this form, I consent to receive communications
+                  from the Sri Shanmugha Educational Institutions through
+                  WhatsApp, SMS, Email, phone Calls, and other channels, even if
+                  my number is registered with DND/NDNC.
+                </label>
+
+                {/* Error */}
+                {error && (
+                  <div
+                    style={{
+                      marginTop: "1rem",
+                      color: "#b91c1c",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    ⚠ {error}
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginTop: "1.5rem",
+                  }}
+                >
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    style={{
+                      padding: "0.75rem 1.5rem",
+                      borderRadius: "8px",
+                      border: "none",
+                      backgroundColor: submitting ? "#93c5fd" : "#3b82f6",
+                      color: "#ffffff",
+                      fontSize: "0.9375rem",
+                      cursor: submitting ? "not-allowed" : "pointer",
+                    }}
+                  >
+                    {submitting ? "Submitting..." : "Submit Enquiry"}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

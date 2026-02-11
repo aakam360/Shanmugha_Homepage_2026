@@ -9,6 +9,7 @@ import Features from "../components/institutions/features";
 import Aakam from "../components/institutions/aakam";
 import AakamShine from "../components/institutions/aakamshine";
 import NewsSection from "../components/institutions/NewsSection";
+import CampusNews from "../components/institutions/CampusNews";
 
 const Institutions = () => {
   return (
@@ -17,11 +18,12 @@ const Institutions = () => {
         <HeaderThree />
         <HeroSlider />
         <InstitutionIntro />
-        <Sets />
+        {/* <Sets /> */}
         <Features />
         <Aakam />
         <AakamShine />
         <NewsSection />
+        {/* <CampusNews /> */}
         <Footer />
       </div>
     </div>

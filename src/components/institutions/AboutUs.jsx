@@ -129,9 +129,7 @@ const AboutUs = () => {
         Our Vision
       </Typography>
       <Typography sx={{ color: "#555", lineHeight: 1.8, fontSize: "1.3rem" }}>
-        To be an institute of repute in the field of engineering and technology 
-        by educating students to meet the global challenges and to instill 
-        values that would enable them to enrich the society.
+To be an institution of excellence in education by nurturing learners to meet global challenges and by instilling strong values that empower them to contribute meaningfully to society.
       </Typography>
     </Box>
 

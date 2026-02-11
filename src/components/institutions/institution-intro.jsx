@@ -27,7 +27,7 @@ const InstitutionIntro = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const announcementText =
-    "Admissions for the academic year 2026-2027 are now open! ✨ New courses launched in Artificial Intelligence and Data Science.";
+    "Admissions for the academic year 2026-2027 are now open!";
 
 const newsData = [
     { date: "Tue, 20/01/2026 - 09:30", title: "Inaguration Cermony-Dr.V.Irai Anbu Mentoring Programme" },
