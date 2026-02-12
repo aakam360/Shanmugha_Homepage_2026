@@ -1,4 +1,8 @@
-import React, { useEffect } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 /* =========================
    Campus News Card
@@ -11,12 +15,13 @@ function NewsCard({ item, className = "" }) {
       <article
         className={`bg-white rounded-sm shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
       >
-        <a href={item.href} className="block group">
+        <Link href={item.href} className="block group">
           <div className="relative aspect-[16/10] overflow-hidden">
-            <img
+            <Image
               src={item.image}
               alt={item.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             />
           </div>
           <div className="p-4">
@@ -27,19 +32,20 @@ function NewsCard({ item, className = "" }) {
               {item.title}
             </h3>
           </div>
-        </a>
+        </Link>
       </article>
     );
   }
 
   return (
     <article className={`relative overflow-hidden rounded-sm ${className}`}>
-      <a href={item.href} className="block group h-full">
+      <Link href={item.href} className="block group h-full">
         <div className="relative h-full min-h-[260px]">
-          <img
+          <Image
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-black/45 transition duration-300 group-hover:bg-black/60" />
           <div className="absolute inset-0 p-6 flex flex-col justify-end">
@@ -51,7 +57,7 @@ function NewsCard({ item, className = "" }) {
             </h3>
           </div>
         </div>
-      </a>
+      </Link>
     </article>
   );
 }
@@ -105,12 +111,12 @@ export default function CampusNews() {
         </div>
 
         <div className="mt-12 text-center">
-          <a
+          <Link
             href="/news"
             className="inline-flex items-center justify-center rounded-md bg-[#b60000] px-8 py-3 text-lg font-semibold text-white hover:bg-[#8c0000] transition"
           >
             More campus news
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -680,7 +680,7 @@ const PROGRAMS = [
   "Medical Science & Research",
 ];
 
-export default function StudentEnquiry() {
+export default function StudentEnquiry({ autoOpen = true }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -699,8 +699,10 @@ export default function StudentEnquiry() {
 
   useEffect(() => {
     if (!mounted) return;
-    setOpen(true);
-  }, [mounted]);
+    if (autoOpen) {
+      setOpen(true);
+    }
+  }, [mounted, autoOpen]);
 
   useEffect(() => {
     if (!mounted || !open) return;
@@ -949,7 +951,7 @@ export default function StudentEnquiry() {
                         lineHeight: "1.2",
                       }}
                     >
-                      Student Enquiry Form
+                      For Admission
                     </h2>
 
                     <p

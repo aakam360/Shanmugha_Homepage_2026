@@ -10,11 +10,13 @@ import Aakam from "../components/institutions/aakam";
 import AakamShine from "../components/institutions/aakamshine";
 import NewsSection from "../components/institutions/NewsSection";
 import CampusNews from "../components/institutions/CampusNews";
+import StudentEnquiry from "../components/institutions/popup-modal/StudentEnquiry";
 
 const Institutions = () => {
   return (
     <div className="sticky-header">
       <div id="main-wrapper" className="main-wrapper">
+        <StudentEnquiry autoOpen={true} />
         <HeaderThree />
         <HeroSlider />
         <InstitutionIntro />
@@ -23,7 +25,7 @@ const Institutions = () => {
         <Aakam />
         <AakamShine />
         <NewsSection />
-        {/* <CampusNews /> */}
+        <CampusNews />
         <Footer />
       </div>
     </div>

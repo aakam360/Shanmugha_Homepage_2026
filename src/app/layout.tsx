@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "../components/institutions/redux/StoreProvider";
-import StudentEnquiry from "../components/institutions/popup-modal/StudentEnquiry";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -27,10 +27,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={`${poppins.variable} antialiased`}
       >
-        <StoreProvider>
-          <StudentEnquiry />
-          {children}
-        </StoreProvider>
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );

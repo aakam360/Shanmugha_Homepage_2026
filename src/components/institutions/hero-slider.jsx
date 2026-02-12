@@ -167,7 +167,7 @@ const HeroSlider = () => {
             <div className="hero-layout">
               <div className="hero-content">
                 <h1 className="hero-title">Sri Shanmugha Educational Institutions</h1>
-                <h2 className="hero-subtitle">Innovate and Inspire</h2>
+                {/* <h2 className="hero-subtitle">Innovate and Inspire</h2> */}
                 <p className="hero-description">
                   Pioneering Innovation in Higher Education Since 2010. With 15+ Years of Educational Excellence, 20,000+ Students Transformed, 100+ Quality Awards, and 95% Placement Success.
                 </p>
