@@ -1,55 +1,60 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import EngineeringIcon from '@mui/icons-material/Engineering'; // Engineering
-import MedicationIcon from '@mui/icons-material/Medication'; // Pharmacy
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital'; // Nursing
-import ScienceIcon from '@mui/icons-material/Science'; // Medical Science
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety'; // Allied Health
+import { usePathname } from "next/navigation";
+import EngineeringIcon from "@mui/icons-material/Engineering"; // Engineering
+import MedicationIcon from "@mui/icons-material/Medication"; // Pharmacy
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital"; // Nursing
+import ScienceIcon from "@mui/icons-material/Science"; // Medical Science
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety"; // Allied Health
 
 const Header = () => {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  
+
   // Desktop Dropdown States
   const [instOpen, setInstOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  
+
   const [scrolled, setScrolled] = useState(false);
-  
+
   // Ref to detect clicks outside
   const navRef = useRef(null);
 
   // Mock data
-const institutionsData = [
-  { 
-    label: "Engineering College", 
-    icon: <EngineeringIcon />, 
-    href: "https://engineering.shanmugha.edu.in/" 
-  },
-  { 
-    label: "Pharmacy", 
-    icon: <MedicationIcon />, 
-    href: "https://shanmughapharmacy.edu.in/" 
-  },
-  { 
-    label: "Nursing", 
-    icon: <LocalHospitalIcon />, 
-    href: "https://shanmughanursing.edu.in/" 
-  },
-  { 
-    label: "Medical Science & Research", 
-    icon: <ScienceIcon />, 
-    href: "https://shanmugha-msr-website.onrender.com" 
-  },
-  { 
-    label: "Allied Health Science", 
-    icon: <HealthAndSafetyIcon />, 
-    href: "https://shanmugha-ahs-website.onrender.com" 
-  },
-];
+  const institutionsData = [
+    {
+      label: "Engineering College",
+      icon: <EngineeringIcon />,
+      href: "https://engineering.shanmugha.edu.in/",
+    },
+    {
+      label: "Pharmacy",
+      icon: <MedicationIcon />,
+      href: "https://shanmughapharmacy.edu.in/",
+    },
+    {
+      label: "Nursing",
+      icon: <LocalHospitalIcon />,
+      href: "https://shanmughanursing.edu.in/",
+    },
+    {
+      label: "Medical Science & Research",
+      icon: <ScienceIcon />,
+      href: "https://medicalscience.shanmugha.edu.in/",
+    },
+    {
+      label: "Allied Health Science",
+      icon: <HealthAndSafetyIcon />,
+      href: "https://alliedhealthsciences.shanmugha.edu.in/",
+    },
+  ];
   const contactLinks = [
     { label: "FAQ", href: "/faq" }, // Updated based on your contactLinks.js
     { label: "Contact Us", href: "/contact" }, // This now points to your new page
-];
+  ];
+
+  // Check if we're on a news detail page
+  const isNewsPage = pathname?.startsWith("/news/");
 
   // Scroll detection
   useEffect(() => {
@@ -100,20 +105,23 @@ const institutionsData = [
 
   return (
     <>
-      <header className={`edu-header ${scrolled ? "scrolled" : ""}`}>
+      <header
+        className={`edu-header ${scrolled || isNewsPage ? "scrolled" : ""}`}
+      >
         <div className="header-container">
           {/* LOGO */}
           <a href="/">
-          <div className="header-logo">
-            <img
-              src={
-                scrolled
-                  ? "/assets/images/logo/logo-white.png"
-                  : "/assets/images/logo/logo-dark.png"
-              }
-              alt="Sri Shanmugha Educational Institutions"
-            />
-          </div></a>
+            <div className="header-logo">
+              <img
+                src={
+                  scrolled || isNewsPage
+                    ? "/assets/images/logo/logo-white.png"
+                    : "/assets/images/logo/logo-dark.png"
+                }
+                alt="Sri Shanmugha Educational Institutions"
+              />
+            </div>
+          </a>
 
           {/* NAV - DESKTOP */}
           <nav className="header-nav desktop-nav" ref={navRef}>
@@ -125,33 +133,28 @@ const institutionsData = [
               </li>
 
               {/* Institutions Dropdown */}
-              <li 
+              <li
                 className={`dropdown ${instOpen ? "active" : ""}`}
                 onMouseEnter={() => setInstOpen(true)}
                 onMouseLeave={() => setInstOpen(false)}
               >
-                <button 
-                  className="dropdown-title"
-                  onClick={toggleInst}
-                >
+                <button className="dropdown-title" onClick={toggleInst}>
                   Our Institutions <span className="arrow">▾</span>
                 </button>
 
                 <div className="institutions-menu">
-  {institutionsData.map((item, i) => (
-    <a
-      key={i}
-      href={item.href}
-      className="institution-item"
-      onClick={closeAll}
-    >
-      <span className="icon-wrapper">
-        {item.icon}
-      </span>
-      <span>{item.label}</span>
-    </a>
-  ))}
-</div>
+                  {institutionsData.map((item, i) => (
+                    <a
+                      key={i}
+                      href={item.href}
+                      className="institution-item"
+                      onClick={closeAll}
+                    >
+                      <span className="icon-wrapper">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </a>
+                  ))}
+                </div>
               </li>
 
               <li>
@@ -161,15 +164,12 @@ const institutionsData = [
               </li>
 
               {/* Contact Dropdown */}
-              <li 
+              <li
                 className={`dropdown ${contactOpen ? "active" : ""}`}
                 onMouseEnter={() => setContactOpen(true)}
                 onMouseLeave={() => setContactOpen(false)}
               >
-                <button 
-                  className="dropdown-title"
-                  onClick={toggleContact}
-                >
+                <button className="dropdown-title" onClick={toggleContact}>
                   Contact <span className="arrow">▾</span>
                 </button>
 
@@ -193,14 +193,13 @@ const institutionsData = [
               Apply Now
             </button> */}
             <a
-  href="https://newadmissions.shanmugha.edu.in/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="apply-btn"
->
-  Apply Now
-</a>
-
+              href="https://newadmissions.shanmugha.edu.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="apply-btn"
+            >
+              Apply Now
+            </a>
           </div>
 
           {/* HAMBURGER */}
@@ -283,14 +282,13 @@ const institutionsData = [
               Apply Now
             </button> */}
             <a
-  href="https://newadmissions.shanmugha.edu.in/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="btn btn-primary"
->
-  Apply Now
-</a>
-
+              href="https://newadmissions.shanmugha.edu.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+            >
+              Apply Now
+            </a>
           </div>
         </nav>
       </header>
@@ -423,7 +421,7 @@ const institutionsData = [
           transition: all 0.25s ease;
           z-index: 2000;
           border-bottom: 3px solid #1e63e9;
-          margin-top: 0px; 
+          margin-top: 0px;
         }
 
         /* THE BRIDGE: 
@@ -432,7 +430,7 @@ const institutionsData = [
         */
         .institutions-menu::before,
         .contact-menu::before {
-          content: '';
+          content: "";
           position: absolute;
           top: -20px; /* Extends upwards to meet the nav */
           left: 0;
@@ -447,7 +445,7 @@ const institutionsData = [
           align-items: center;
           gap: 14px;
           /* Changed to Gray as requested */
-          color: #4b5563 !important; 
+          color: #4b5563 !important;
           font-size: 15px;
           font-weight: 700;
           text-decoration: none;

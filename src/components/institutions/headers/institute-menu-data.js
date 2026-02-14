@@ -38,7 +38,7 @@ const institute_menu_data = [
 
         icon: true,
         icon_name: "biotech_black_48dp.svg",
-        link: "https://shanmugha-msr-website.onrender.com",
+        link: "https://medicalscience.shanmugha.edu.in/",
         mega_submenu: [],
       },
 
@@ -46,10 +46,9 @@ const institute_menu_data = [
         title: "Allied Health Science",
         icon: true,
         icon_name: "medical_information_black_48dp.svg",
-        link: "https://shanmugha-ahs-website.onrender.com",
+        link: "https://alliedhealthsciences.shanmugha.edu.in/",
         mega_submenu: [],
       },
-      
     ],
   },
 

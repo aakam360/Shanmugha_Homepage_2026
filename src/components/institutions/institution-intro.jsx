@@ -43,7 +43,7 @@ const newsData = [
       {/* === MAIN WRAPPER (for header scroll detection) === */}
       <Box
         component="section"
-        sx={{ backgroundColor: "#f8f9fa", pt: 0, pb: { xs: 6, md: 15 } }}
+        sx={{ backgroundColor: "#f8f9fa", pt: 0, pb: { xs: 3, md: 5 } }}
       >
         {/* === ANNOUNCEMENT MARQUEE === */}
         <Box
@@ -168,7 +168,7 @@ const newsData = [
         </Container>
 
         {/* === LATEST NEWS SECTION === */}
-        <Container
+        {/* <Container
           maxWidth="lg"
           sx={{ mt: { xs: 4, md: 8 }, mb: { xs: 6, md: 10 } }}
         >
@@ -189,7 +189,7 @@ const newsData = [
           </Typography>
 
           <Grid container spacing={4}>
-            {/* === LEFT (Main News Card) === */}
+            
             <Grid size={{ xs: 12, md: 7 }}>
               <Card
                 sx={{
@@ -240,26 +240,12 @@ const newsData = [
                   >
                     Welcome Our Brand Ambassador
                   </Typography>
-                  {/* <Typography
-                    component="a"
-                    href="https://www.figma.com/design/cWdSpdIVvDboRfNhof56QF/SSEI?node-id=0-1&p=f"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: "#f25c05",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      "&:hover": { textDecoration: "underline" },
-                    }}
-                  >
-                    Read More →
-                  </Typography> */}
+     
                 </CardContent>
               </Card>
             </Grid>
 
-            {/* === RIGHT (Auto Scroll News) === */}
+        
             <Grid size={{ xs: 12, md: 5 }}>
               <Card
                 sx={{
@@ -271,7 +257,7 @@ const newsData = [
                   overflow: "hidden",
                 }}
               >
-                {/* Header */}
+            
                 <Box
                   sx={{
                     backgroundColor: "#002b6b",
@@ -285,7 +271,7 @@ const newsData = [
                   NEWS UPDATE
                 </Box>
 
-                {/* Auto-scroll list */}
+            
                 <Box
                   sx={{
                     position: "relative",
@@ -346,7 +332,7 @@ const newsData = [
               </Card>
             </Grid>
           </Grid>
-        </Container>
+        </Container> */}
       </Box>
     </div>
   );

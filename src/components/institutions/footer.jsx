@@ -148,7 +148,7 @@
 //           margin: auto;
 //           display: grid;
 //           gap: 20px;
-//           grid-template-columns: 2fr 2.5fr 1.2fr; 
+//           grid-template-columns: 2fr 2.5fr 1.2fr;
 //         }
 
 //         .logo {
@@ -157,10 +157,10 @@
 
 //         .row {
 //   display: flex;
-//   justify-content: flex-start; 
-//   align-items: flex-start;    
-//   margin-right: 0;             
-//   gap: 40px;                   
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   margin-right: 0;
+//   gap: 40px;
 // }
 
 //         .logo img {
@@ -225,7 +225,7 @@
 //         .footer-links h4 {
 //           color: #fff;
 //           margin-bottom: 10px;
-          
+
 //         }
 
 //         .footer-links a {
@@ -381,8 +381,6 @@
 
 // export default Footer;
 
-
-
 "use client";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -411,7 +409,7 @@ const Footer = () => {
               innovation, research, and holistic development of students across
               multiple disciplines.
             </p>
-{/* 
+            {/* 
             <div className="stats">
               <div className="stat">
                 <strong>NAAC A</strong>
@@ -452,23 +450,26 @@ const Footer = () => {
           <div className="footer-links-wrapper">
             <div className="footer-links">
               <h4>Quick Links</h4>
-               <a href="/about" >
-                  About Us
-                </a>
+              <a href="/about">About Us</a>
               <a href="https://admissions.shanmugha.edu.in/">Admissions</a>
               {/* <a>Academics</a>
               <a>Placements</a>
               <a>Research</a>
               <a>Campus Life</a> */}
-
             </div>
             <div className="footer-links">
               <h4>Institution</h4>
-              <a href="https://engineering.shanmugha.edu.in/" >Engineering & Technology</a>
+              <a href="https://engineering.shanmugha.edu.in/">
+                Engineering & Technology
+              </a>
               <a href="https://shanmughapharmacy.edu.in/">Pharmacy</a>
               <a href="https://shanmughanursing.edu.in/">Nursing</a>
-              <a href="https://shanmugha-ahs-website.onrender.com">Allied Health Sciences</a>
-              <a href="https://shanmugha-msr-website.onrender.com">Medical Science & Research</a>
+              <a href="https://alliedhealthsciences.shanmugha.edu.in/">
+                Allied Health Sciences
+              </a>
+              <a href="https://medicalscience.shanmugha.edu.in/">
+                Medical Science & Research
+              </a>
             </div>
           </div>
         </div>
@@ -489,7 +490,6 @@ const Footer = () => {
         <div className="footer-bottom">
           <span>© 2026 Sri Shanmugha Educational Institutions</span>
           <div className="bottom-links">
-
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="/terms-and-conditions">Terms of Service</a>
             {/* <a>Sitemap</a> */}
@@ -695,11 +695,15 @@ const Footer = () => {
           font-weight: 600;
         }
 
-        .badge.green { background: #16a34a; }
-        .badge.blue { background: #2563eb; }
+        .badge.green {
+          background: #16a34a;
+        }
+        .badge.blue {
+          background: #2563eb;
+        }
 
         /* RESPONSIVE BREAKPOINTS */
-        
+
         /* Tablets (iPad, etc.) */
         @media (max-width: 1024px) {
           .footer-container {

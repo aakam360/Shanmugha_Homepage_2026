@@ -20,12 +20,13 @@ const Institutions = () => {
         <HeaderThree />
         <HeroSlider />
         <InstitutionIntro />
-        {/* <Sets /> */}
+        <CampusNews />
+        <Sets />
         <Features />
         <Aakam />
         <AakamShine />
-        <NewsSection />
-        <CampusNews />
+        {/* <NewsSection /> */}
+        
         <Footer />
       </div>
     </div>

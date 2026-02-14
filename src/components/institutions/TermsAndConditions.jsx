@@ -202,16 +202,7 @@ const TermsAndConditions = () => {
 
           <Divider sx={{ my: 4 }} />
 
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#777",
-              textAlign: "center",
-              fontSize: "0.9rem",
-            }}
-          >
-            These Terms & Conditions were last updated on [Date]. We reserve the right to update these terms at any time.
-          </Typography>
+    
         </Container>
       </Box>
       <Footer />

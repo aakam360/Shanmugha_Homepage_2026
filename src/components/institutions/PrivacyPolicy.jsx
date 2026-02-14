@@ -214,16 +214,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 4 }} />
 
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#777",
-              textAlign: "center",
-              fontSize: "0.9rem",
-            }}
-          >
-            This Privacy Policy was last updated on [Date]. We reserve the right to update this policy at any time.
-          </Typography>
+
         </Container>
       </Box>
       <Footer />

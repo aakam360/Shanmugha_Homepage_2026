@@ -1,67 +1,81 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { Box, Typography, Grid, Container, Card, CardContent, Button } from '@mui/material';
+import React from "react";
+import Link from "next/link";
+import {
+  Box,
+  Typography,
+  Grid,
+  Container,
+  Card,
+  CardContent,
+  Button,
+} from "@mui/material";
 
 const stats = [
-  { number: '3500+', label: 'STUDENTS' },
-  { number: '5', label: 'INSTITUTIONS' },
-  { number: '300+', label: 'CORPORATE PARTNERS' },
-  { number: '120', label: 'ACRE CAMPUS' },
+  { number: "3500+", label: "STUDENTS" },
+  { number: "5", label: "INSTITUTIONS" },
+  { number: "300+", label: "CORPORATE PARTNERS" },
+  { number: "120", label: "ACRE CAMPUS" },
 ];
 
 const institutions = [
   {
-    title: 'ENGINEERING & TECHNOLOGY',
-    description: 'Cutting-edge programs in AI, Computer Science, and Engineering focused on innovation.',
-    link: 'https://engineering.shanmugha.edu.in/',
-    iconSrc: '/assets/images/logo/png/engglogo-01-4-1.png',
-    programs: '10 UG & 2 PG Programs',
+    title: "ENGINEERING & TECHNOLOGY",
+    description:
+      "Cutting-edge programs in AI, Computer Science, and Engineering focused on innovation.",
+    link: "https://engineering.shanmugha.edu.in/",
+    iconSrc: "/assets/images/logo/png/engglogo-01-4-1.png",
+    programs: "10 UG & 2 PG Programs",
   },
   {
-    title: 'PHARMACY',
-    link: 'https://shanmughapharmacy.edu.in/',
-    iconSrc: '/assets/images/logo/png/pharmacylogo-01-3.png',
-    programs: '5 Programs',
-    description: 'Shaping future pharmacists through advanced education, research, and clinical practice.',
+    title: "PHARMACY",
+    link: "https://shanmughapharmacy.edu.in/",
+    iconSrc: "/assets/images/logo/png/pharmacylogo-01-3.png",
+    programs: "5 Programs",
+    description:
+      "Shaping future pharmacists through advanced education, research, and clinical practice.",
   },
   {
-    title: 'NURSING',
-    link: 'https://shanmughanursing.edu.in/',
-    iconSrc: '/assets/images/logo/png/Shanmugha-Nursing-For-Women.png',
-    programs: '3 Programs',
-    description: 'Preparing future nurses with strong clinical expertise, ethics, and empathy.',
+    title: "NURSING",
+    link: "https://shanmughanursing.edu.in/",
+    iconSrc: "/assets/images/logo/png/Shanmugha-Nursing-For-Women.png",
+    programs: "3 Programs",
+    description:
+      "Preparing future nurses with strong clinical expertise, ethics, and empathy.",
   },
   {
-    title: 'MEDICAL SCIENCE & RESEARCH',
-    link: 'https://shanmugha-msr-website.onrender.com',
-    iconSrc: '/assets/images/logo/png/Shanmugha-Medical-Science-Logo-Print-01.png',
-    programs: '9 Programs',
-    description: 'Transforming healthcare through strong medical education and advanced research initiatives',
+    title: "MEDICAL SCIENCE & RESEARCH",
+    link: "https://medicalscience.shanmugha.edu.in/",
+    iconSrc:
+      "/assets/images/logo/png/Shanmugha-Medical-Science-Logo-Print-01.png",
+    programs: "6 Programs",
+    description:
+      "Transforming healthcare through strong medical education and advanced research initiatives",
   },
   {
-    title: 'ALLIED HEALTH',
-    link: 'https://shanmugha-ahs-website.onrender.com',
-    iconSrc: '/assets/images/logo/png/ahslogo-01.png',
-    programs: '9 Programs',
-    description: 'Advancing healthcare support services with advanced allied health programs',
+    title: "ALLIED HEALTH",
+    link: "https://alliedhealthsciences.shanmugha.edu.in/",
+    iconSrc: "/assets/images/logo/png/ahslogo-01.png",
+    programs: "3 Programs",
+    description:
+      "Advancing healthcare support services with advanced allied health programs",
   },
 ];
 
 const partnerLogos = [
-  { src: '/assets/images/institutions/medical1.JPG', alt: 'Partner 1' },
-  { src: '/assets/images/institutions/medical2.JPG', alt: 'Partner 2' },
-  { src: '/assets/images/institutions/medical3.JPG', alt: 'Partner 3' },
-  { src: '/assets/images/institutions/medical4.JPG', alt: 'Partner 4' },
-  { src: '/assets/images/institutions/medical5.JPG', alt: 'Partner 5' },
-  { src: '/assets/images/institutions/medical6.JPG', alt: 'Partner 6' },
-  { src: '/assets/images/institutions/nursing1.JPG', alt: 'Partner 7' },
-  { src: '/assets/images/institutions/nursing2.JPG', alt: 'Partner 8' },
-  { src: '/assets/images/institutions/nursing3.JPG', alt: 'Partner 9' },
-  { src: '/assets/images/institutions/engine1.JPG', alt: 'Partner 10' },
-  { src: '/assets/images/institutions/engine2.JPG', alt: 'Partner 11' },
-  { src: '/assets/images/institutions/engine3.JPG', alt: 'Partner 12' },
+  { src: "/assets/images/institutions/medical1.JPG", alt: "Partner 1" },
+  { src: "/assets/images/institutions/medical2.JPG", alt: "Partner 2" },
+  { src: "/assets/images/institutions/medical3.JPG", alt: "Partner 3" },
+  { src: "/assets/images/institutions/medical4.JPG", alt: "Partner 4" },
+  { src: "/assets/images/institutions/medical5.JPG", alt: "Partner 5" },
+  { src: "/assets/images/institutions/medical6.JPG", alt: "Partner 6" },
+  { src: "/assets/images/institutions/nursing1.JPG", alt: "Partner 7" },
+  { src: "/assets/images/institutions/nursing2.JPG", alt: "Partner 8" },
+  { src: "/assets/images/institutions/nursing3.JPG", alt: "Partner 9" },
+  { src: "/assets/images/institutions/engine1.JPG", alt: "Partner 10" },
+  { src: "/assets/images/institutions/engine2.JPG", alt: "Partner 11" },
+  { src: "/assets/images/institutions/engine3.JPG", alt: "Partner 12" },
 ];
 
 const topLogos = partnerLogos.slice(0, 6);
@@ -69,13 +83,13 @@ const bottomLogos = partnerLogos.slice(6, 12);
 
 // Seamless marquee keyframes
 const marqueeKeyframes = {
-  '@keyframes marquee': {
-    from: { transform: 'translateX(0)' },
-    to: { transform: 'translateX(-50%)' },
+  "@keyframes marquee": {
+    from: { transform: "translateX(0)" },
+    to: { transform: "translateX(-50%)" },
   },
-  '@keyframes marqueeReverse': {
-    from: { transform: 'translateX(-50%)' },
-    to: { transform: 'translateX(0)' },
+  "@keyframes marqueeReverse": {
+    from: { transform: "translateX(-50%)" },
+    to: { transform: "translateX(0)" },
   },
 };
 
@@ -83,14 +97,14 @@ const marqueeKeyframes = {
 function LogoRow({ logos, duration = 40, reverse = false }) {
   const row = [...logos, ...logos]; // duplicate once for seamless loop
   return (
-    <Box sx={{ overflow: 'hidden' }}>
+    <Box sx={{ overflow: "hidden" }}>
       <Box
         sx={{
-          display: 'flex',
-          width: 'max-content',
-          willChange: 'transform',
-          animation: `${reverse ? 'marqueeReverse' : 'marquee'} ${duration}s linear infinite`,
-          '&:hover': { animationPlayState: 'paused' },
+          display: "flex",
+          width: "max-content",
+          willChange: "transform",
+          animation: `${reverse ? "marqueeReverse" : "marquee"} ${duration}s linear infinite`,
+          "&:hover": { animationPlayState: "paused" },
           ...marqueeKeyframes,
         }}
       >
@@ -98,11 +112,11 @@ function LogoRow({ logos, duration = 40, reverse = false }) {
           <Box
             key={`${logo.src}-${i}`}
             sx={{
-              flex: '0 0 auto',
+              flex: "0 0 auto",
               px: 3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Box
@@ -112,12 +126,12 @@ function LogoRow({ logos, duration = 40, reverse = false }) {
               loading="lazy"
               draggable={false}
               sx={{
-                display: 'block',
+                display: "block",
                 maxWidth: 180,
-                height: 'auto',
-                borderRadius: '10px',
-                userSelect: 'none',
-                pointerEvents: 'none',
+                height: "auto",
+                borderRadius: "10px",
+                userSelect: "none",
+                pointerEvents: "none",
               }}
             />
           </Box>
@@ -208,7 +222,7 @@ const Sets = () => {
       </Box>
 
       {/* === ACCREDITATIONS SECTION === */}
-      <Box
+      {/* <Box
         sx={{ py: { xs: 5, md: 7 }, mt: { xs: 4, md: 12 }, bgcolor: "white" }}
       >
         <Container maxWidth="lg">
@@ -235,24 +249,24 @@ const Sets = () => {
               mb: 4,
             }}
           >
-            {/* <Box
+            <Box
               component="img"
               src="/assets/images/batch-images/1.png"
               alt="Accreditation 1"
               sx={{ height: { xs: 110, md: 150 } }}
-            /> */}
+            />
             <Box
               component="img"
               src="/assets/images/batch-images/3.png"
               alt="Accreditation 2"
               sx={{ height: { xs: 110, md: 150 } }}
             />
-            {/* <Box
+            <Box
               component="img"
               src="/assets/images/batch-images/1.png"
               alt="Accreditation 3"
               sx={{ height: { xs: 110, md: 150 } }}
-            /> */}
+            />
           </Box>
 
           <Typography
@@ -271,7 +285,7 @@ const Sets = () => {
             | Industry Partnerships | International Standards
           </Typography>
         </Container>
-      </Box>
+      </Box> */}
 
       {/* === OUR INSTITUTIONS & LOGO SCROLLER SECTION === */}
       <Box sx={{ py: 1, bgcolor: "#f0f2f5" }}>
